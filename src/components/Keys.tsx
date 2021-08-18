@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Contract } from "@ethersproject/contracts";
+import { ethers } from "ethers";
 import { 
     Flex, 
     Text, 
@@ -8,10 +10,11 @@ import {
     NumberInputField
 } from "@chakra-ui/react";
 import { 
+    contract,
     useKeyPrice, 
     useJackpot, 
     useContractMethod,
-    useGetUserKeyBalance 
+    useGetUserKeyBalance,
 } from "../hooks";
 
 
@@ -22,7 +25,23 @@ export default function Keys() {
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
     const [input, setInput] = useState("");
+    const [userKeyBalance1, setUserKeyBalance1] = useState(0);
 
+    useEffect(() => {
+        contract.on("keysPurchased", (_userKeyBalance, _totalKeys, _keyPrice, _divPool, _jackpot, event) => {
+            console.log("_userKeyBalance");
+            console.log(_userKeyBalance);
+            setUserKeyBalance1(userKeyBalance1);
+            console.log("_totalKeys");
+            console.log(_totalKeys);
+            console.log("_keyPrice");
+            console.log(_keyPrice);
+            event.removeListener();
+            // The event object contains the verbatim log data, the
+            // EventFragment and functions to fetch the block,
+            // transaction and receipt and event functions
+        });
+    });
 
     function handleGetUserKeyBalance() {
         console.log("handleGetUserKeyBalance:");
@@ -43,6 +62,7 @@ export default function Keys() {
                 value: _amount*keyPrice.toNumber()
             });
         }
+        
     }
 
     function handleInput(valueAsString: string, valueAsNumber: number) {
@@ -60,7 +80,7 @@ export default function Keys() {
         Key Price: {keyPrice ? keyPrice.toNumber() : 0}
         </Text>
         <Text color="white" fontSize="4xl">
-        KeyBalance: {userKeyBalance ? userKeyBalance.toNumber() : 0}
+        Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
         </Text>
         <Button 
         colorScheme="teal" 
