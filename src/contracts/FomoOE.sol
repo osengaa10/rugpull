@@ -50,6 +50,11 @@ contract FomoOE {
         jackpot += msg.value/2;
         divTracker[msg.sender]._keyBalance += _amount;
         totalKeys += _amount;
+        // update a user's withdrawable divvies after they purchase keys
+        uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
+        uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
+        divTracker[msg.sender]._divBalance += numerator/totalKeys;
+        // update a user's withdrawable divvies after they purchase keys
         keyPrice = keyPrice + 100;
         emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);   
     } 
@@ -79,8 +84,9 @@ contract FomoOE {
         uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
         uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
         uint _divBalance = numerator/totalKeys;
-        emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
-        emit userDivvies(_divBalance);
+        divTracker[msg.sender]._divBalance = _divBalance;
+        // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
+        // emit userDivvies(_divBalance);
         return _divBalance;
     }
 
