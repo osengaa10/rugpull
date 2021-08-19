@@ -12,7 +12,8 @@ export default function Layout({ children }: Props) {
       alignItems="center"
       justifyContent="center"
       h="100vh"
-      bg="gray.800"
+      bgGradient="linear(to-t, #7928CA, #FF0080)"
+      
     >
       {children}
     </Flex>
