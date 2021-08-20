@@ -16,6 +16,7 @@ import {
     useJackpot, 
     useContractMethod,
     useGetUserKeyBalance,
+    useGetUserDivBalance
 } from "../hooks";
 
 
@@ -23,11 +24,12 @@ export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
+    const userDivBalance = useGetUserDivBalance();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { state: updateDivviesState, send: updateDivvies } = useContractMethod("updateDivvies");
+    const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
     const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
     const [input, setInput] = useState("");
-    const [userKeyBalance1, setUserKeyBalance1] = useState(0);
 
     // useEffect(() => {
     //     contract.on("keysPurchased", (_userKeyBalance, _totalKeys, _keyPrice, _divPool, _jackpot, event) => {
@@ -51,9 +53,24 @@ export default function Keys() {
     // }
 
     function handleUpdateDivvies() {
-        console.log("handleUpdateDivvies");
-        updateDivvies();
+        console.log("HANDLE UPDATE DIVVIES:");
+        let userDivvies = updateDivvies();
+        console.log("userDivvies")
+        console.log(userDivvies);
     }
+
+    function handleWithdrawDivvies() {
+        console.log("HANDLE WITHDRAW DIVVIES:");
+        withdrawDivvies();
+        // console.log("userWithdrawDivvies");
+        // console.log(userWithdrawDivvies);
+    }
+
+    // const handleUpdateDivvies = async() => {        
+    //     console.log("HANDLE UPDATE DIVVIES:");
+    //     await updateDivvies().then(console.log);
+    //     console.log("result: ");
+    //   }
 
     function handlePurchaseKeys() {
         const _amount = parseInt(input);
@@ -90,11 +107,14 @@ export default function Keys() {
         <Text color="white" fontSize="4xl">
         Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
         </Text>
+        <Text color="white" fontSize="4xl">
+        Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+        </Text>
         <Button 
         colorScheme="teal" 
         size="lg"
         onClick={handleUpdateDivvies}>
-        Claim Divvies
+        Refresh Divvies
         </Button>
         <Box mt={4}>
             <NumberInput
@@ -109,6 +129,9 @@ export default function Keys() {
             </NumberInput>
             <Button isFullWidth colorScheme="purple" onClick={handlePurchaseKeys}>
                 Buy Keys
+            </Button>
+            <Button isFullWidth colorScheme="purple" onClick={handleWithdrawDivvies}>
+                Withdraw Divvies!
             </Button>
       </Box>
     </Flex>

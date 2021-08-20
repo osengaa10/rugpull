@@ -1,9 +1,9 @@
 import { ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
-// UNCOMMENT WHEN ISSUE IS PATCHED
-//================================
+// //UNCOMMENT WHEN ISSUE IS PATCHED
+// //================================
 // import { useContractCall, useContractFunction } from "@usedapp/core";
-//================================
+// //================================
 
 
 // COMMENT WHEN ISSUE IS PATCHED
@@ -21,10 +21,10 @@ declare const window: any;
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner()
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi);
-//// UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
-////================================
+// // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
+// //================================
 // export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, provider);
-////================================
+// //================================
 
 // COMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
 //================================
@@ -75,6 +75,19 @@ export function useGetUserKeyBalance() {
   return divTracker[0];
 }
 
+export function useGetUserDivBalance() {
+  const { activateBrowserWallet, account } = useEthers();
+  const userDivvies: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "divTracker",
+    args: [account],
+  }) ?? [];
+  console.log("userDivvies:");
+  console.log(userDivvies);
+  return userDivvies[2];
+}
+
 // COMMENT WHEN ISSUE IS PATCHED
 //================================
 export function useContractMethod(methodName: string) {
@@ -86,12 +99,12 @@ export function useContractMethod(methodName: string) {
 //================================
 
 
-//// UNCOMMENT WHEN ISSUE IS PATCHED
-////================================
+// // UNCOMMENT WHEN ISSUE IS PATCHED
+// //================================
 // export function useContractMethod(methodName: string) {
 //   const { state, send } = useContractFunction(contract, methodName, {});
 //   console.log("{state, send}: hook");
 //   console.log({state, send});
 //   return { state, send };
 // }
-////================================
+// //================================
