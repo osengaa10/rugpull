@@ -96,7 +96,7 @@ contract FomoOE {
 
     //     // return foo + bar;
     // }
-    function updateDivvies() public returns(uint) {
+    function updateDivvies() public view returns(uint) {
         uint tempUserDivBalance;
         uint tempUserDivPool;
         uint tempNumerator;
@@ -107,10 +107,10 @@ contract FomoOE {
             tempUserDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
             tempNumerator = divTracker[msg.sender]._keyBalance * tempUserDivPool;
             tempUserDivBalance = tempNumerator/totalKeys;
-            // can update a users div balance, but it'll cost gas
-            divTracker[msg.sender]._divBalance = tempUserDivBalance;
-            // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
-            // emit userDivvies(_divBalance);
+            // // can update a users div balance, but it'll cost gas
+            // divTracker[msg.sender]._divBalance = tempUserDivBalance;
+            // // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
+            // // emit userDivvies(_divBalance);
         }
         
         return divTracker[msg.sender]._divBalance;

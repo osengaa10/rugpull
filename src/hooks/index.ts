@@ -80,12 +80,12 @@ export function useGetUserDivBalance() {
   const userDivvies: any = useContractCall({
     abi: fomoOEContractInterface,
     address: fomoOEContractAddress,
-    method: "divTracker",
-    args: [account],
+    method: "updateDivvies",
+    args: [],
   }) ?? [];
   console.log("userDivvies:");
   console.log(userDivvies);
-  return userDivvies[2];
+  return userDivvies;
 }
 
 // COMMENT WHEN ISSUE IS PATCHED
