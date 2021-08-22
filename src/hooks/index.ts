@@ -74,28 +74,29 @@ export function useGetUserKeyBalance() {
   console.log(divTracker);
   return divTracker[0];
 }
-
-export function useGetUserDivBalance() {
-  const { activateBrowserWallet, account } = useEthers();
-  const userDivvies: any = useContractCall({
-    abi: fomoOEContractInterface,
-    address: fomoOEContractAddress,
-    method: "updateDivvies",
-    args: [],
-  }) ?? [];
-  console.log("userDivvies:");
-  console.log(userDivvies);
-  return userDivvies;
-}
+  // second attempt
+  export function useGetUserDivBalance() {
+    const { activateBrowserWallet, account } = useEthers();
+    const userDivvies: any = useContractCall({
+      abi: fomoOEContractInterface,
+      address: fomoOEContractAddress,
+      method: "updateDivvies",
+      args: [],
+    }) ?? [];
+    console.log("userDivvies:");
+    console.log(userDivvies);
+    return userDivvies;
+  }
 
 // COMMENT WHEN ISSUE IS PATCHED
 //================================
-export function useContractMethod(methodName: string) {
-  const { state, send } = useContractFunction(contract, methodName, 5, {});
-  console.log("{state, send}: hook");
-  console.log({state, send});
-  return { state, send };
-}
+  // first attempt
+  export function useContractMethod(methodName: string) {
+    const { state, send } = useContractFunction(contract, methodName, 5, {});
+    console.log("{state, send}: hook");
+    console.log({state, send});
+    return { state, send };
+  }
 //================================
 
 
