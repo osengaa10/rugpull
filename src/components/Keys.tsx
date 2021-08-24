@@ -24,11 +24,11 @@ export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
-        // second attempt
-        const userDivBalance = useGetUserDivBalance();
+    // second attempt
+    const userDivBalance = useGetUserDivBalance();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
-        // first attempt
-        const { state: updateDivviesState, send: updateDivvies } = useContractMethod("updateDivvies");
+    // first attempt
+    const { state: updateDivviesState, send: updateDivvies } = useContractMethod("updateDivvies");
     const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
     const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
     const [input, setInput] = useState("");
@@ -54,12 +54,12 @@ export default function Keys() {
     //     getUserKeyBalance();
     // }
         // first attempt
-        function handleUpdateDivvies() {
-            console.log("HANDLE UPDATE DIVVIES:");
-            let userDivvies = updateDivvies();
-            console.log("userDivvies")
-            console.log(userDivvies);
-        }
+    function handleUpdateDivvies() {
+        console.log("HANDLE UPDATE DIVVIES:");
+        let userDivvies = updateDivvies();
+        console.log("userDivvies")
+        console.log(userDivvies);
+    }
 
     function handleWithdrawDivvies() {
         console.log("HANDLE WITHDRAW DIVVIES:");
@@ -109,15 +109,15 @@ export default function Keys() {
         <Text color="white" fontSize="4xl">
         Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
         </Text>
-            <Text color="white" fontSize="4xl">
-            Divvies: {userDivBalance ? userDivBalance.toString() : 0}
-            </Text>
-            <Button 
-            colorScheme="teal" 
-            size="lg"
-            onClick={handleUpdateDivvies}>
-            Refresh Divvies
-            </Button>
+        <Text color="white" fontSize="4xl">
+        Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+        </Text>
+        <Button 
+        colorScheme="teal" 
+        size="lg"
+        onClick={handleUpdateDivvies}>
+        Refresh Divvies
+        </Button>
         <Box mt={4}>
             <NumberInput
                 mb={2}

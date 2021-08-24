@@ -75,7 +75,30 @@ contract FomoOE {
     }
 
 
-    // function updateDivvies(address _userAddress) public view returns(uint) {
+    function updateDivvies(address _userAddress) public view returns(uint) {
+        uint tempUserDivBalance;
+        uint tempUserDivPool;
+        uint tempNumerator;
+        if (totalKeys == 0 ) {
+            tempUserDivBalance = 0;
+        } else {
+            // the pool a user's dividend is entitled to since last dividend withdraw.
+            tempUserDivPool = divPool - divTracker[_userAddress]._totalDivPoolAtWithdraw;
+            tempNumerator = divTracker[_userAddress]._keyBalance * tempUserDivPool;
+            tempUserDivBalance = tempNumerator/totalKeys;
+            // can update a users div balance, but it'll cost gas
+            // divTracker[msg.sender]._divBalance = _divBalance;
+            // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
+            // emit userDivvies(_divBalance);
+        }
+        
+        return tempUserDivBalance;
+
+        // return foo + bar;
+    }
+
+
+    // function updateDivvies() public view returns(uint) {
     //     uint tempUserDivBalance;
     //     uint tempUserDivPool;
     //     uint tempNumerator;
@@ -83,40 +106,19 @@ contract FomoOE {
     //         tempUserDivBalance = 0;
     //     } else {
     //         // the pool a user's dividend is entitled to since last dividend withdraw.
-    //         tempUserDivPool = divPool - divTracker[_userAddress]._totalDivPoolAtWithdraw;
-    //         tempNumerator = divTracker[_userAddress]._keyBalance * tempUserDivPool;
+    //         tempUserDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
+    //         tempNumerator = divTracker[msg.sender]._keyBalance * tempUserDivPool;
     //         tempUserDivBalance = tempNumerator/totalKeys;
-    //         // can update a users div balance, but it'll cost gas
-    //         // divTracker[msg.sender]._divBalance = _divBalance;
-    //         // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
-    //         // emit userDivvies(_divBalance);
+    //         // // can update a users div balance, but it'll cost gas
+    //         // divTracker[msg.sender]._divBalance = tempUserDivBalance;
+    //         // // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
+    //         // // emit userDivvies(_divBalance);
     //     }
         
-    //     return divTracker[_userAddress]._keyBalance;
+    //     return tempUserDivBalance;
 
     //     // return foo + bar;
     // }
-        function updateDivvies() public view returns(uint) {
-            uint tempUserDivBalance;
-            uint tempUserDivPool;
-            uint tempNumerator;
-            if (totalKeys == 0 ) {
-                tempUserDivBalance = 0;
-            } else {
-                // the pool a user's dividend is entitled to since last dividend withdraw.
-                tempUserDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
-                tempNumerator = divTracker[msg.sender]._keyBalance * tempUserDivPool;
-                tempUserDivBalance = tempNumerator/totalKeys;
-                // // can update a users div balance, but it'll cost gas
-                // divTracker[msg.sender]._divBalance = tempUserDivBalance;
-                // // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
-                // // emit userDivvies(_divBalance);
-            }
-            
-            return divTracker[msg.sender]._divBalance;
-
-            // return foo + bar;
-        }
 
     function withdrawDivvies() public {
         address payable to = payable(msg.sender);
