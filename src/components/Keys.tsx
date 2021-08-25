@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import { Contract } from "@ethersproject/contracts";
 import { ethers } from "ethers";
 import Countdown from 'react-countdown';
+import Timer from "./Timer";
+
 import { 
     Flex, 
     Text, 
     Button,
     Box,
     NumberInput,
-    NumberInputField
+    NumberInputField,
+    Divider,
+    SimpleGrid
 } from "@chakra-ui/react";
 import { 
     contract,
@@ -16,7 +20,9 @@ import {
     useJackpot, 
     useContractMethod,
     useGetUserKeyBalance,
-    useGetUserDivBalance
+    useGetUserDivBalance,
+    useGetTimeLeft,
+    useWinner
 } from "../hooks";
 
 
@@ -24,11 +30,10 @@ export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
-    // second attempt
     const userDivBalance = useGetUserDivBalance();
+    const timeLeft = useGetTimeLeft();
+    const winner = useWinner();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
-    // first attempt
-    const { state: updateDivviesState, send: updateDivvies } = useContractMethod("updateDivvies");
     const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
     const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
     const [input, setInput] = useState("");
@@ -53,13 +58,13 @@ export default function Keys() {
     //     console.log("handleGetUserKeyBalance:");
     //     getUserKeyBalance();
     // }
-        // first attempt
-    function handleUpdateDivvies() {
-        console.log("HANDLE UPDATE DIVVIES:");
-        let userDivvies = updateDivvies();
-        console.log("userDivvies")
-        console.log(userDivvies);
-    }
+    //     // first attempt
+    // function handleUpdateDivvies() {
+    //     console.log("HANDLE UPDATE DIVVIES:");
+    //     let userDivvies = updateDivvies();
+    //     console.log("userDivvies")
+    //     console.log(userDivvies);
+    // }
 
     function handleWithdrawDivvies() {
         console.log("HANDLE WITHDRAW DIVVIES:");
@@ -99,43 +104,71 @@ export default function Keys() {
 
     return (
     <Flex direction="column" align="center" mt="4">
-        <Countdown date={Date.now() + 10000} />
+        {/* <Timer seconds={9999999} /> */}
+        <Text color="white" fontSize="2xl">
+            {winner}
+        </Text>
+        <Text color="white" fontSize="4xl">
+            is winning!
+        </Text>
         <Text color="white" fontSize="8xl">
+            <Countdown date={Date.now() + timeLeft*1000} />
+        </Text>
+        <Text color="white" fontSize="6xl">
         Jackpot: {jackpot ? jackpot.toNumber() : 0}
         </Text>
-        <Text color="white" fontSize="4xl">
-        Key Price: {keyPrice ? keyPrice.toNumber() : 0}
-        </Text>
-        <Text color="white" fontSize="4xl">
-        Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
-        </Text>
-        <Text color="white" fontSize="4xl">
+        <Divider orientation="horizontal" />
+        <SimpleGrid columns={3} spacing={10}>
+            <Box m={4}>
+                <Text color="white" fontSize="3xl">
+                    Key Price: {keyPrice ? keyPrice.toNumber() : 0}
+                </Text>
+            </Box>
+            <Box m={4}>
+                <NumberInput
+                    mb={2}
+                    min={1}
+                    value={input}
+                    onChange={handleInput}
+                    color="white"
+                    clampValueOnBlur={false}
+                >
+                    <NumberInputField />
+                </NumberInput>
+            </Box>
+            <Box m={4}>
+                <Button colorScheme="purple" onClick={handlePurchaseKeys}>
+                    Buy {input} Keys
+                </Button> 
+            </Box>
+            
+            </SimpleGrid>
+            <Divider orientation="horizontal" />
+            <Box>
+                <Text color="white" fontSize="4xl">
+                    Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
+                </Text>
+            </Box>
+            
+        
+        {/* <Text color="white" fontSize="4xl">
         Divvies: {userDivBalance ? userDivBalance.toString() : 0}
-        </Text>
-        <Button 
-        colorScheme="teal" 
-        size="lg"
-        onClick={handleUpdateDivvies}>
-        Refresh Divvies
-        </Button>
-        <Box mt={4}>
-            <NumberInput
-                mb={2}
-                min={1}
-                value={input}
-                onChange={handleInput}
-                color="white"
-                clampValueOnBlur={false}
-            >
-                <NumberInputField />
-            </NumberInput>
-            <Button isFullWidth colorScheme="purple" onClick={handlePurchaseKeys}>
-                Buy Keys
+        </Text> */}
+        
+        
+        <Box>
+            <Text color="white" fontSize="4xl">
+                Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+            </Text>
+        </Box>
+        <Box>
+            <Button 
+            colorScheme="teal" 
+            size="lg"
+            onClick={handleWithdrawDivvies}>
+                Claim Divvies
             </Button>
-            <Button isFullWidth colorScheme="purple" onClick={handleWithdrawDivvies}>
-                Withdraw Divvies!
-            </Button>
-      </Box>
+        </Box>
     </Flex>
     );
-    }
+}

@@ -75,23 +75,42 @@ export function useGetUserKeyBalance() {
   console.log(divTracker);
   return divTracker[0];
 }
-  // second attempt
-  export function useGetUserDivBalance() {
-    const { activateBrowserWallet, account } = useEthers();
-    const userDivvies: any = useContractCall({
-      abi: fomoOEContractInterface,
-      address: fomoOEContractAddress,
-      method: "updateDivvies",
-      args: [account],
-    }) ?? [];
-    console.log("userDivvies:");
-    console.log(userDivvies);
-    return userDivvies;
-  }
+  
+export function useGetUserDivBalance() {
+  const { activateBrowserWallet, account } = useEthers();
+  const userDivvies: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "updateDivvies",
+    args: [account],
+  }) ?? [];
+  console.log("userDivvies:");
+  console.log(userDivvies);
+  return userDivvies;
+}
+
+export function useGetTimeLeft() {
+  const [getTimeLeft]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "getTimeLeft",
+    args: [],
+  }) ?? [];
+  return getTimeLeft;
+}
+
+export function useWinner() {
+  const [winner]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "getWinner",
+    args: [],
+  }) ?? [];
+  return winner;
+}
 
 // COMMENT WHEN ISSUE IS PATCHED
 //================================
-  // first attempt
   export function useContractMethod(methodName: string) {
     const { state, send } = useContractFunction(contract, methodName, 5, {});
     console.log("{state, send}: hook");
