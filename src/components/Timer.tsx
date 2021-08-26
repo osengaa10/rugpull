@@ -40,10 +40,9 @@ const Timer = ({ seconds }: Props) => {
       // add timeRemaining as a dependency to re-rerun the effect
       // when we update it
     }, [timeRemaining]);
-  
     return (
       <div>
-        {secondsToDhms(timeRemaining)}
+        {timeRemaining}
       </div>
     );
   };

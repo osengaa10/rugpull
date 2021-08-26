@@ -1,8 +1,7 @@
 
 // // Goerli Testnet address
-// export const fomoOEContractAddress = "0x4edC35630EC284b8a6D9785791698dfA21D6E117";
+// export const fomoOEContractAddress = "0xc036e3Ab9d3A73ae8F85fa7A09afF2BBa616C3F5";
 
-// export const fomoOEContractAddress = "0x2713524Ad9B3f69c6751e5d9d4570Beef6F568ec";
 
 
 // Truffle/localhost:8545 address mac OS

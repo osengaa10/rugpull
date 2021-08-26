@@ -99,6 +99,16 @@ export function useGetTimeLeft() {
   return getTimeLeft;
 }
 
+export function useTotalTime() {
+  const [totalTime]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "totalTime",
+    args: [],
+  }) ?? [];
+  return totalTime;
+}
+
 export function useWinner() {
   const [winner]: any = useContractCall({
     abi: fomoOEContractInterface,

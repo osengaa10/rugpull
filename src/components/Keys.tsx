@@ -3,7 +3,7 @@ import { Contract } from "@ethersproject/contracts";
 import { ethers } from "ethers";
 import Countdown from 'react-countdown';
 import Timer from "./Timer";
-
+import JackpotCountdown from "./JackpotCountdown";
 import { 
     Flex, 
     Text, 
@@ -23,7 +23,7 @@ import {
     useContractMethod,
     useGetUserKeyBalance,
     useGetUserDivBalance,
-    useGetTimeLeft,
+    // useGetTimeLeft,
     useWinner
 } from "../hooks";
 
@@ -33,7 +33,7 @@ export default function Keys() {
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
     const userDivBalance = useGetUserDivBalance();
-    const timeLeft = useGetTimeLeft();
+    // const timeLeft = useGetTimeLeft();
     const winner = useWinner();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
@@ -62,7 +62,7 @@ export default function Keys() {
         // console.log("userWithdrawDivvies");
         // console.log(userWithdrawDivvies);
     }
-    
+
     function handlePurchaseKeys() {
         const _amount = parseInt(input);
         if (_amount) {
@@ -81,8 +81,9 @@ export default function Keys() {
     }
 
     function handleInput(valueAsString: string, valueAsNumber: number) {
-        console.log("timeLeft:");
-        console.log(timeLeft.toNumber());
+        // console.log("timeLeft:");
+        // console.log(timeLeft.toNumber());
+        console.log(Date.now());
         setInput(valueAsString);
     }
 
@@ -101,7 +102,8 @@ export default function Keys() {
         </Box> */}
         <Box>
             <Text color="white" fontSize="6xl">
-                <Countdown date={Date.now() + timeLeft.toNumber()*1000} />
+                {/* <Countdown date={Date.now() + timeLeft*1000} /> */}
+                <JackpotCountdown />
             </Text>
         </Box>
         <Box>
