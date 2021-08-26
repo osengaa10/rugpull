@@ -63,6 +63,11 @@ contract FomoOE {
         jackpot += msg.value/2;
         divTracker[msg.sender]._keyBalance += _amount;
         totalKeys += _amount;
+        if (_amount*30 > 86400 - (totalTime-block.timestamp)) {
+            totalTime = 86400 + block.timestamp;
+        } else {
+            totalTime += _amount*30;
+        }
         // FIX THIS: update a user's withdrawable divvies after they purchase keys
         uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
         uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;

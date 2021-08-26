@@ -12,7 +12,9 @@ import {
     NumberInput,
     NumberInputField,
     Divider,
-    SimpleGrid
+    SimpleGrid,
+    Wrap,
+    WrapItem
 } from "@chakra-ui/react";
 import { 
     contract,
@@ -104,71 +106,79 @@ export default function Keys() {
 
     return (
     <Flex direction="column" align="center" mt="4">
-        {/* <Timer seconds={9999999} /> */}
+        {/* <Timer seconds={86400} /> */}
         <Text color="white" fontSize="2xl">
             {winner}
         </Text>
         <Text color="white" fontSize="4xl">
             is winning!
         </Text>
-        <Text color="white" fontSize="8xl">
-            <Countdown date={Date.now() + timeLeft*1000} />
-        </Text>
-        <Text color="white" fontSize="6xl">
-        Jackpot: {jackpot ? jackpot.toNumber() : 0}
-        </Text>
-        <Divider orientation="horizontal" />
-        <SimpleGrid columns={3} spacing={10}>
-            <Box m={4}>
-                <Text color="white" fontSize="3xl">
-                    Key Price: {keyPrice ? keyPrice.toNumber() : 0}
-                </Text>
-            </Box>
-            <Box m={4}>
-                <NumberInput
-                    mb={2}
-                    min={1}
-                    value={input}
-                    onChange={handleInput}
-                    color="white"
-                    clampValueOnBlur={false}
-                >
-                    <NumberInputField />
-                </NumberInput>
-            </Box>
-            <Box m={4}>
-                <Button colorScheme="purple" onClick={handlePurchaseKeys}>
-                    Buy {input} Keys
-                </Button> 
-            </Box>
-            
-            </SimpleGrid>
-            <Divider orientation="horizontal" />
-            <Box>
-                <Text color="white" fontSize="4xl">
-                    Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
-                </Text>
-            </Box>
-            
-        
-        {/* <Text color="white" fontSize="4xl">
-        Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+        {/* <Text color="white" fontSize="6xl">
+            <Timer seconds={86400} />
         </Text> */}
-        
-        
         <Box>
-            <Text color="white" fontSize="4xl">
-                Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+            <Text color="white" fontSize="6xl">
+                <Countdown date={Date.now() + timeLeft*1000} />
             </Text>
         </Box>
         <Box>
-            <Button 
-            colorScheme="teal" 
-            size="lg"
-            onClick={handleWithdrawDivvies}>
-                Claim Divvies
-            </Button>
+            <Text color="white" fontSize="8xl">
+                Jackpot: {jackpot ? jackpot.toNumber() : 0}
+            </Text>
         </Box>
+        <Divider orientation="horizontal" />
+        <Wrap margin="auto" justify="center">
+            <WrapItem>
+                <Box boxShadow="dark-lg" bgGradient="linear(to-t, #7928CA, #FF0080)" m={4} borderWidth="2px" align="center" borderRadius="lg">
+                    <Box mt={4}>
+                        <Text color="white" fontSize="3xl">
+                            Key Price: {keyPrice ? keyPrice.toNumber() : 0}
+                        </Text>
+                    </Box>
+                    <Box m={4}>
+                        <NumberInput
+                            mb={2}
+                            min={1}
+                            value={input}
+                            onChange={handleInput}
+                            color="white"
+                            clampValueOnBlur={false}
+                        >
+                            <NumberInputField />
+                        </NumberInput>
+                    </Box>
+                    <Box m={4}>
+                        <Button colorScheme="purple" size="lg" onClick={handlePurchaseKeys}>
+                            Buy {input} Keys
+                        </Button> 
+                    </Box>
+                </Box>
+            </WrapItem>
+            <WrapItem>
+                <Box boxShadow="dark-lg" m={4} bgGradient="linear(to-t, #7928CA, #FF0080)" borderWidth="2px" align="center" borderRadius="lg">
+                {/* <Box boxShadow="dark-lg" m={4} bg="#4A5568" borderWidth="2px" align="center" borderRadius="lg"> */}
+
+                    <Box m={4}>
+                        <Text color="white" fontSize="3xl">
+                            Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
+                        </Text>
+                    </Box>
+                    <Box m={4}>
+                        <Text color="white" fontSize="3xl">
+                            Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+                        </Text>
+                    </Box>
+                    <Box m={4}>
+                        <Button 
+                        colorScheme="purple" 
+                        size="lg"
+                        onClick={handleWithdrawDivvies}>
+                            Claim Divvies
+                        </Button>
+                    </Box>
+                </Box>
+            </WrapItem>
+        </Wrap>
     </Flex>
     );
 }

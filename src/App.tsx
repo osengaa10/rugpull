@@ -19,7 +19,7 @@ function App() {
     <Router>
     <ChakraProvider theme={theme}>
       <Layout>
-      <Switch>
+        <Switch>
           <Route exact path="/">
           <ConnectButton handleOpenModal={onOpen} />
           <AccountModal isOpen={isOpen} onClose={onClose} />
@@ -29,8 +29,6 @@ function App() {
             <Token />
           </Route>
         </Switch>
-        
-        {/* <Keys /> */}
       </Layout>
         
     </ChakraProvider>
