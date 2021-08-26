@@ -28,12 +28,10 @@ contract FomoOE {
     
     constructor() {
         owner = msg.sender;
-        startTime = block.timestamp;
-        letTheGamesBegin();
         
     }
     function letTheGamesBegin() private {
-        totalTime = startTime + 86400;
+        totalTime = block.timestamp + 86400;
     }
 
     function receiveMoney() public payable {
@@ -52,11 +50,17 @@ contract FomoOE {
         _to.transfer(getBalance());
     }
     function getTimeLeft() public view returns(uint) {
+        if (totalKeys == 0) {
+            return 86400;
+        }
         return totalTime - block.timestamp;
     }
 
     function purchaseKeys(uint _amount) public payable {
         require(msg.value == keyPrice*_amount, "not enough to buy the key(s).");
+        if (totalKeys == 0) {
+            letTheGamesBegin();
+        }
         // keyBalance[msg.sender] += _amount;
         // TODO: ADDRESS ROUNDING ISSUE
         divPool += msg.value/2;
@@ -64,15 +68,16 @@ contract FomoOE {
         divTracker[msg.sender]._keyBalance += _amount;
         totalKeys += _amount;
         if (_amount*30 > 86400 - (totalTime-block.timestamp)) {
-            totalTime = 86400 + block.timestamp;
+            // totalTime = 86400 + block.timestamp;
+            letTheGamesBegin();
         } else {
             totalTime += _amount*30;
         }
-        // FIX THIS: update a user's withdrawable divvies after they purchase keys
-        uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
-        uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
-        divTracker[msg.sender]._divBalance = numerator/totalKeys;
-        // FIX THIS: update a user's withdrawable divvies after they purchase keys
+        // // FIX THIS: update a user's withdrawable divvies after they purchase keys
+        // uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
+        // uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
+        // divTracker[msg.sender]._divBalance = numerator/totalKeys;
+        // // FIX THIS: update a user's withdrawable divvies after they purchase keys
         keyPrice = keyPrice + 400;
         winner = msg.sender;
         emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot, winner);   

@@ -56,31 +56,13 @@ export default function Keys() {
     //     });
     // });
 
-    // function handleGetUserKeyBalance() {
-    //     console.log("handleGetUserKeyBalance:");
-    //     getUserKeyBalance();
-    // }
-    //     // first attempt
-    // function handleUpdateDivvies() {
-    //     console.log("HANDLE UPDATE DIVVIES:");
-    //     let userDivvies = updateDivvies();
-    //     console.log("userDivvies")
-    //     console.log(userDivvies);
-    // }
-
     function handleWithdrawDivvies() {
         console.log("HANDLE WITHDRAW DIVVIES:");
         withdrawDivvies();
         // console.log("userWithdrawDivvies");
         // console.log(userWithdrawDivvies);
     }
-
-    // const handleUpdateDivvies = async() => {        
-    //     console.log("HANDLE UPDATE DIVVIES:");
-    //     await updateDivvies().then(console.log);
-    //     console.log("result: ");
-    //   }
-
+    
     function handlePurchaseKeys() {
         const _amount = parseInt(input);
         if (_amount) {
@@ -99,26 +81,27 @@ export default function Keys() {
     }
 
     function handleInput(valueAsString: string, valueAsNumber: number) {
-        console.log("keyPrice: ");
-        console.log(keyPrice);
+        console.log("timeLeft:");
+        console.log(timeLeft.toNumber());
         setInput(valueAsString);
     }
 
     return (
     <Flex direction="column" align="center" mt="4">
-        {/* <Timer seconds={86400} /> */}
         <Text color="white" fontSize="2xl">
             {winner}
         </Text>
         <Text color="white" fontSize="4xl">
             is winning!
         </Text>
-        {/* <Text color="white" fontSize="6xl">
-            <Timer seconds={86400} />
-        </Text> */}
+        {/* <Box>
+            <Text color="white" fontSize="6xl">
+                <Timer seconds={timeLeft ? timeLeft.toNumber() : 0} />
+            </Text>
+        </Box> */}
         <Box>
             <Text color="white" fontSize="6xl">
-                <Countdown date={Date.now() + timeLeft*1000} />
+                <Countdown date={Date.now() + timeLeft.toNumber()*1000} />
             </Text>
         </Box>
         <Box>
