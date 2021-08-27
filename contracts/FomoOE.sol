@@ -86,27 +86,9 @@ contract FomoOE {
     function getWinner() public view returns(address) {
         return winner;
     }
+    
+    // ============= FIXED =============== 
     function updateDivvies(address _userAddress) public view returns(uint) {
-        uint tempUserDivBalance;
-        uint tempUserDivPool;
-        uint tempNumerator;
-        if (totalKeys == 0 ) {
-            tempUserDivBalance = 0;
-        } else {
-            // the pool a user's dividend is entitled to since last dividend withdraw.
-            tempUserDivPool = divPool - divTracker[_userAddress]._totalDivPoolAtWithdraw;
-            tempNumerator = divTracker[_userAddress]._keyBalance * tempUserDivPool;
-            tempUserDivBalance = tempNumerator/totalKeys;
-            // can update a users div balance, but it'll cost gas
-            // divTracker[msg.sender]._divBalance = _divBalance;
-            // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
-            // emit userDivvies(_divBalance);
-        }  
-        return tempUserDivBalance;
-    }
-
-        // ============= FIXED =============== 
-    function updateDivvies2(address _userAddress) public view returns(uint) {
         uint tempUserWithdrawAmount;
         uint tempNumerator;
         if (totalKeys == 0 ) {
@@ -123,27 +105,59 @@ contract FomoOE {
         return tempUserWithdrawAmount;
     }
     // ============= FIXED =============== 
+    
+    
+    
+    // function updateDivvies2(address _userAddress) public view returns(uint) {
+    //     uint tempUserDivBalance;
+    //     uint tempUserDivPool;
+    //     uint tempNumerator;
+    //     if (totalKeys == 0 ) {
+    //         tempUserDivBalance = 0;
+    //     } else {
+    //         // the pool a user's dividend is entitled to since last dividend withdraw.
+    //         tempUserDivPool = divPool - divTracker[_userAddress]._totalDivPoolAtWithdraw;
+    //         tempNumerator = divTracker[_userAddress]._keyBalance * tempUserDivPool;
+    //         tempUserDivBalance = tempNumerator/totalKeys;
+    //         // can update a users div balance, but it'll cost gas
+    //         // divTracker[msg.sender]._divBalance = _divBalance;
+    //         // emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot);
+    //         // emit userDivvies(_divBalance);
+    //     }  
+    //     return tempUserDivBalance;
+    // }
 
+    // function withdrawDivvie2() public {
+    //     address payable to = payable(msg.sender);
+    //     uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
+    //     uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
+    //     uint _divBalance = numerator/totalKeys;
+    //     divTracker[msg.sender]._divBalance = 0;
+    //     divTracker[msg.sender]._totalDivPoolAtWithdraw = divPool;
+    //     require(_divBalance > 0, "You have no divvies to claim");
+    //     to.transfer(_divBalance);
+    // }
+    
     function withdrawDivvies() public {
         address payable to = payable(msg.sender);
-        uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
-        uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
-        uint _divBalance = numerator/totalKeys;
-        divTracker[msg.sender]._divBalance = 0;
-        divTracker[msg.sender]._totalDivPoolAtWithdraw = divPool;
-        require(_divBalance > 0, "You have no divvies to claim");
-        to.transfer(_divBalance);
-    }
+        uint tempUserWithdrawAmount;
+        uint tempNumerator;
+        if (totalKeys == 0 ) {
+            tempUserWithdrawAmount = 0;
+        } else {
+            // example to reference, but solidity can't do decimals
+            // // tempUserKeyProportion = divTracker[_userAddress]._keyBalance/totalKeys;
+            // // tempUserWithdrawAmount = tempUserKeyProportion*divPool - divTracker[_userAddress]._withdrawnAmount;
 
-    function withdrawDivvies2() public {
-        address payable to = payable(msg.sender);
-        uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
-        uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
-        uint _divBalance = numerator/totalKeys;
-        divTracker[msg.sender]._divBalance = 0;
-        divTracker[msg.sender]._totalDivPoolAtWithdraw = divPool;
-        require(_divBalance > 0, "You have no divvies to claim");
-        to.transfer(_divBalance);
+            tempNumerator = divTracker[msg.sender]._keyBalance * divPool;
+            tempUserWithdrawAmount = tempNumerator/totalKeys - divTracker[msg.sender]._withdrawnAmount;
+            divTracker[msg.sender]._withdrawnAmount += tempUserWithdrawAmount;
+        }  
+        require(tempUserWithdrawAmount > 0, "You have no divvies to claim");
+        to.transfer(tempUserWithdrawAmount);
     }
 
 }
+
+
+
