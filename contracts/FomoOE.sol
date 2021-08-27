@@ -18,6 +18,7 @@ contract FomoOE {
         uint _keyBalance;
         uint _totalDivPoolAtWithdraw;
         uint _divBalance;
+        uint _withdrawnAmount;
     }
 
     mapping(address => Divvies) public divTracker;
@@ -104,7 +105,37 @@ contract FomoOE {
         return tempUserDivBalance;
     }
 
+        // ============= FIXED =============== 
+    function updateDivvies2(address _userAddress) public view returns(uint) {
+        uint tempUserWithdrawAmount;
+        uint tempNumerator;
+        if (totalKeys == 0 ) {
+            tempUserWithdrawAmount = 0;
+        } else {
+            // example to reference, but solidity can't do decimals
+            // // tempUserKeyProportion = divTracker[_userAddress]._keyBalance/totalKeys;
+            // // tempUserWithdrawAmount = tempUserKeyProportion*divPool - divTracker[_userAddress]._withdrawnAmount;
+
+            tempNumerator = divTracker[_userAddress]._keyBalance * divPool;
+            tempUserWithdrawAmount = tempNumerator/totalKeys - divTracker[_userAddress]._withdrawnAmount;
+            
+        }  
+        return tempUserWithdrawAmount;
+    }
+    // ============= FIXED =============== 
+
     function withdrawDivvies() public {
+        address payable to = payable(msg.sender);
+        uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
+        uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
+        uint _divBalance = numerator/totalKeys;
+        divTracker[msg.sender]._divBalance = 0;
+        divTracker[msg.sender]._totalDivPoolAtWithdraw = divPool;
+        require(_divBalance > 0, "You have no divvies to claim");
+        to.transfer(_divBalance);
+    }
+
+    function withdrawDivvies2() public {
         address payable to = payable(msg.sender);
         uint userDivPool = divPool - divTracker[msg.sender]._totalDivPoolAtWithdraw;
         uint numerator = divTracker[msg.sender]._keyBalance * userDivPool;
