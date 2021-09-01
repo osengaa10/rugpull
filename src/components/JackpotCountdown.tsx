@@ -12,6 +12,9 @@ export default function JackpotCountdown() {
             // <Countdown date={Date.now() + timeLeft*1000} />
 
     return(
-        <Countdown date={totalTime ? totalTime.toNumber()*1000 : 0} />
+        <div>
+            <Countdown date={totalTime ? totalTime.toNumber()*1000 : 0} />
+        </div>
+        
     )
 }

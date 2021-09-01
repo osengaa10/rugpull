@@ -102,7 +102,7 @@ export default function Keys() {
         </Box> */}
         <Box>
             <Text color="white" fontSize="6xl">
-                {/* <Countdown date={Date.now() + timeLeft*1000} /> */}
+                {/* <Countdown date={Date.now() + 10000} /> */}
                 <JackpotCountdown />
             </Text>
         </Box>
