@@ -34,12 +34,8 @@ contract FomoOE {
         
     }
     function letTheGamesBegin() private {
-        totalTime = block.timestamp + 86400;
-    }
-
-    function receiveMoney() public payable {
-        balanceReceived += msg.value;
-        emit contractBalance(address(this).balance);
+        // totalTime = block.timestamp + 86400;
+        totalTime = block.timestamp + 60;
     }
     function getTimeLeft() public view returns(uint) {
         if (totalKeys == 0) {
@@ -119,7 +115,8 @@ contract FomoOE {
 
     function jackpotPayout() public {
         require(getTimeLeft() == 0, "game is still in play");
-        require(msg.sender == winning, "you are not the winner");
+        require(jackpot > 0, "No money in jackpot");
+        // require(msg.sender == winning, "you are not the winner");
         address payable to = payable(winning);
         to.transfer(jackpot);
     }

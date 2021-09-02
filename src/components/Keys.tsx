@@ -101,7 +101,7 @@ export default function Keys() {
             </Text>
         </Box> */}
         <Box>
-            <Text color="white" fontSize="6xl">
+            <Text component={'span'} color="white" fontSize="6xl">
                 {/* <Countdown date={Date.now() + 10000} /> */}
                 <JackpotCountdown />
             </Text>

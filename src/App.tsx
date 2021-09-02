@@ -16,6 +16,7 @@ import {
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
+    <div>
     <Router>
     <ChakraProvider theme={theme}>
       <Layout>
@@ -33,6 +34,7 @@ function App() {
         
     </ChakraProvider>
     </Router>
+    </div>
   );
 }
 
