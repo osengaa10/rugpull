@@ -1,16 +1,16 @@
 import { ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
-// //UNCOMMENT WHEN ISSUE IS PATCHED
-// //================================
-// import { useContractCall, useContractFunction } from "@usedapp/core";
-// //================================
+//UNCOMMENT WHEN ISSUE IS PATCHED
+//================================
+import { useContractCall, useContractFunction } from "@usedapp/core";
+//================================
 
 
-// COMMENT WHEN ISSUE IS PATCHED
-//================================
-import { useContractCall} from "@usedapp/core";
-import { useContractFunction } from "./workaround";
-//================================
+// // COMMENT WHEN ISSUE IS PATCHED
+// //================================
+// import { useContractCall} from "@usedapp/core";
+// import { useContractFunction } from "./workaround";
+// //================================
 
 import fomoOEContractAbi from "../contracts/FomoOE.json";
 // import fomoOEContractAbi from "../abi/FomoOE.json";
@@ -22,15 +22,15 @@ declare const window: any;
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner()
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi);
-// // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
-// //================================
-// export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, provider);
-// //================================
+// UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
+//================================
+export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, provider);
+//================================
 
-// COMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
-//================================
-export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, signer);
-//================================
+// // COMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
+// //================================
+// export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, signer);
+// //================================
 
 
 // declare const account: any;
@@ -119,23 +119,23 @@ export function useWinner() {
   return winner;
 }
 
-// COMMENT WHEN ISSUE IS PATCHED
-//================================
-  export function useContractMethod(methodName: string) {
-    const { state, send } = useContractFunction(contract, methodName, 5, {});
-    // console.log("{state, send}: hook");
-    // console.log({state, send});
-    return { state, send };
-  }
-//================================
+// // COMMENT WHEN ISSUE IS PATCHED
+// //================================
+//   export function useContractMethod(methodName: string) {
+//     const { state, send } = useContractFunction(contract, methodName, 5, {});
+//     // console.log("{state, send}: hook");
+//     // console.log({state, send});
+//     return { state, send };
+//   }
+// //================================
 
 
-// // UNCOMMENT WHEN ISSUE IS PATCHED
-// //================================
-// export function useContractMethod(methodName: string) {
-//   const { state, send } = useContractFunction(contract, methodName, {});
-//   console.log("{state, send}: hook");
-//   console.log({state, send});
-//   return { state, send };
-// }
-// //================================
+// UNCOMMENT WHEN ISSUE IS PATCHED
+//================================
+export function useContractMethod(methodName: string) {
+  const { state, send } = useContractFunction(contract, methodName, {});
+  // console.log("{state, send}: hook");
+  // console.log({state, send});
+  return { state, send };
+}
+//================================

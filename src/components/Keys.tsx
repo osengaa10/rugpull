@@ -14,8 +14,10 @@ import {
     Divider,
     SimpleGrid,
     Wrap,
-    WrapItem
+    WrapItem,
+    Tooltip
 } from "@chakra-ui/react";
+import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { 
     contract,
     useKeyPrice, 
@@ -23,18 +25,22 @@ import {
     useContractMethod,
     useGetUserKeyBalance,
     useGetUserDivBalance,
-    // useGetTimeLeft,
-    useWinner
 } from "../hooks";
 
+
+const breakpoints = createBreakpoints({
+  sm: "30em",
+  md: "48em",
+  lg: "62em",
+  xl: "80em",
+  "2xl": "96em",
+})
 
 export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
     const userDivBalance = useGetUserDivBalance();
-    // const timeLeft = useGetTimeLeft();
-    const winner = useWinner();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
     const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
@@ -89,26 +95,15 @@ export default function Keys() {
 
     return (
     <Flex direction="column" align="center" mt="4">
-        <Text color="white" fontSize="2xl">
-            {winner}
-        </Text>
-        <Text color="white" fontSize="4xl">
-            is winning!
-        </Text>
-        {/* <Box>
-            <Text color="white" fontSize="6xl">
-                <Timer seconds={timeLeft ? timeLeft.toNumber() : 0} />
-            </Text>
-        </Box> */}
         <Box>
-            <Text component={'span'} color="white" fontSize="6xl">
+            <Text component={'span'} color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
                 {/* <Countdown date={Date.now() + 10000} /> */}
                 <JackpotCountdown />
             </Text>
         </Box>
         <Box>
-            <Text color="white" fontSize="8xl">
-                Jackpot: {jackpot ? jackpot.toNumber() : 0}
+            <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
+                Rug value: {jackpot ? jackpot.toNumber() : 0}
             </Text>
         </Box>
         <Divider orientation="horizontal" />
@@ -149,9 +144,11 @@ export default function Keys() {
                         </Text>
                     </Box>
                     <Box m={4}>
+                    <Tooltip hasArrow label="Withdrawable ETH" bg="gray.300" color="black">
                         <Text color="white" fontSize="3xl">
                             Divvies: {userDivBalance ? userDivBalance.toString() : 0}
                         </Text>
+                    </Tooltip>
                     </Box>
                     <Box m={4}>
                         <Button 
@@ -165,5 +162,6 @@ export default function Keys() {
             </WrapItem>
         </Wrap>
     </Flex>
+    
     );
 }

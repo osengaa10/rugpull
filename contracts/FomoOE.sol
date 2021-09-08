@@ -33,6 +33,10 @@ contract FomoOE {
         owner = msg.sender;
         
     }
+    function restartGame() public {
+        require(getTimeLeft() == 0, "game is still in play");
+        letTheGamesBegin();
+    }
     function letTheGamesBegin() private {
         // totalTime = block.timestamp + 86400;
         totalTime = block.timestamp + 60;
