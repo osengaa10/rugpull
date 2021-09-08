@@ -13,10 +13,16 @@ export default function JackpotCountdown() {
     const timeLeft = useGetTimeLeft();
     const totalTime = useTotalTime();
     const { state: jackpotPayoutState, send: jackpotPayout } = useContractMethod("jackpotPayout");
+    const [timeLeftState, setTimeLeftState] = useState(timeLeft);
 
-    console.log("totalTime:")
-    console.log(totalTime);
+    // console.log("totalTime:")
+    // console.log(totalTime);
     // <Countdown date={Date.now() + timeLeft*1000} />
+
+    useEffect(() => {
+        setTimeLeftState(timeLeft ? timeLeft.toNumber(): -1)
+        console.log("timeLeftState:", timeLeftState);
+      }, [timeLeft]);
 
     function payWinner() {
         if (totalTime.toNumber()*1000 <= Date.now()) {
@@ -29,13 +35,15 @@ export default function JackpotCountdown() {
         }
     }
 
-    if (totalTime === undefined) {
+    if (timeLeft === undefined) {
+        console.log("TIMER IS UNDEFINED!");
         return(
             <div>
                 game not started
             </div>   
         )
     } else if (timeLeft.toNumber() <= 0) {
+        console.log("TIMER IS AT ZERO!", timeLeft.toNumber());
         return (
             <div>
                 <Button 
@@ -47,12 +55,12 @@ export default function JackpotCountdown() {
             </div>  
         )
     } else {
+        console.log("TIMER GREATER THAN ZERO!", timeLeft.toNumber());
         return (
-            
-                <span>
-                    <Countdown date={totalTime ? totalTime.toNumber()*1000 : 0} />
-                </span>
-           
+
+            // <span>
+                <Countdown date={totalTime ? totalTime.toNumber()*1000 : 0} />
+            // </span>
         )
     }
 }

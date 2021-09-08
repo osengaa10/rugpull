@@ -71,8 +71,8 @@ export function useGetUserKeyBalance() {
     method: "divTracker",
     args: [account],
   }) ?? [];
-  console.log("divTracker");
-  console.log(divTracker);
+  // console.log("divTracker");
+  // console.log(divTracker);
   return divTracker[0];
 }
   
@@ -84,8 +84,8 @@ export function useGetUserDivBalance() {
     method: "updateDivvies",
     args: [account],
   }) ?? [];
-  console.log("userDivvies:");
-  console.log(userDivvies);
+  // console.log("userDivvies:");
+  // console.log(userDivvies);
   return userDivvies;
 }
 
@@ -123,8 +123,8 @@ export function useWinner() {
 //================================
   export function useContractMethod(methodName: string) {
     const { state, send } = useContractFunction(contract, methodName, 5, {});
-    console.log("{state, send}: hook");
-    console.log({state, send});
+    // console.log("{state, send}: hook");
+    // console.log({state, send});
     return { state, send };
   }
 //================================
