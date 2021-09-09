@@ -176,7 +176,7 @@ export default function RulesModal({ isOpen, onClose }: Props) {
             fontWeight="medium"
             fontSize="md"
           >
-            Please dont f**k yourself financially. This is a game.
+            Please dont financially f**k yourself. This is just a game.
           </Text>
         </ModalFooter>
       </ModalContent>

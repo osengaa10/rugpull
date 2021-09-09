@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Contract } from "@ethersproject/contracts";
 import { ethers } from "ethers";
+import { formatEther } from "@ethersproject/units";
 import Countdown from 'react-countdown';
 import Timer from "./Timer";
 import JackpotCountdown from "./JackpotCountdown";
@@ -15,9 +16,11 @@ import {
     SimpleGrid,
     Wrap,
     WrapItem,
-    Tooltip
+    Tooltip,
+    Spacer
 } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
+import { InfoOutlineIcon } from '@chakra-ui/icons'
 import { 
     contract,
     useKeyPrice, 
@@ -110,9 +113,16 @@ export default function Keys() {
         <Wrap margin="auto" justify="center">
             <WrapItem>
                 <Box boxShadow="dark-lg" bgGradient="linear(to-t, #7928CA, #FF0080)" m={4} borderWidth="2px" align="center" borderRadius="lg">
+                <Flex me="2" mt="2" mb="0">
+                        <Spacer />
+                        <Tooltip hasArrow label="After each purchase, 30 seconds gets added to the countdown per key (hard cap is 24hr)
+                            and price increases by 1%." bg="gray.300" color="black">
+                            <InfoOutlineIcon/>
+                        </Tooltip>
+                    </Flex>  
                     <Box mt={4}>
                         <Text color="white" fontSize="3xl">
-                            Key Price: {keyPrice ? keyPrice.toNumber() : 0}
+                            Key Price: {keyPrice ? formatEther(keyPrice.toNumber()) : 0}
                         </Text>
                     </Box>
                     <Box m={4}>
@@ -136,19 +146,21 @@ export default function Keys() {
             </WrapItem>
             <WrapItem>
                 <Box boxShadow="dark-lg" m={4} bgGradient="linear(to-t, #7928CA, #FF0080)" borderWidth="2px" align="center" borderRadius="lg">
-                {/* <Box boxShadow="dark-lg" m={4} bg="#4A5568" borderWidth="2px" align="center" borderRadius="lg"> */}
-
+                    <Flex me="2" mt="2" mb="0">
+                        <Spacer />
+                        <Tooltip hasArrow label="more keys = more divvies" bg="gray.300" color="black">
+                            <InfoOutlineIcon/>
+                        </Tooltip>
+                    </Flex>  
                     <Box m={4}>
                         <Text color="white" fontSize="3xl">
                             Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
-                        </Text>
+                        </Text> 
                     </Box>
                     <Box m={4}>
-                    <Tooltip hasArrow label="Withdrawable ETH" bg="gray.300" color="black">
                         <Text color="white" fontSize="3xl">
-                            Divvies: {userDivBalance ? userDivBalance.toString() : 0}
+                            Divvies: {userDivBalance ? formatEther(userDivBalance.toString()) : 0}
                         </Text>
-                    </Tooltip>
                     </Box>
                     <Box m={4}>
                         <Button 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Countdown from 'react-countdown';
-import { Button, Text, Flex } from "@chakra-ui/react";
+import { Button, Text, Flex, Box } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { 
     useGetTimeLeft,
@@ -67,14 +67,15 @@ export default function JackpotCountdown() {
                 <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
                     won!
                 </Text>
-                <div>
+                <Box align="center">
                     <Button 
                         colorScheme="purple" 
                         size="lg"
                         onClick={payWinner}>
                             payout winner
                     </Button>
-                </div>  
+                    <Text fontSize="16px">This button sends the eth the {winner}'s address.</Text>
+                </Box>  
             </Flex>
         )
     } else {
