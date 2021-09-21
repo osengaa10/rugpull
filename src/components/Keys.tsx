@@ -43,10 +43,10 @@ export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
-    const userDivBalance = useGetUserDivBalance();
+    const userDivBalance = useGetUserDivBalance().toString();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
-    const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
+    // const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
     const [input, setInput] = useState("");
 
     // useEffect(() => {
@@ -106,7 +106,7 @@ export default function Keys() {
         </Box>
         <Box>
             <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
-                Rug value: {jackpot ? jackpot.toNumber() : 0}
+                Japot value: {jackpot ? parseFloat(formatEther(jackpot.toNumber())).toFixed(7) : 0} ETH
             </Text>
         </Box>
         <Divider orientation="horizontal" />
@@ -122,7 +122,7 @@ export default function Keys() {
                     </Flex>  
                     <Box mt={4}>
                         <Text color="white" fontSize="3xl">
-                            Key Price: {keyPrice ? formatEther(keyPrice.toNumber()) : 0}
+                            Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0}
                         </Text>
                     </Box>
                     <Box m={4}>
@@ -159,7 +159,7 @@ export default function Keys() {
                     </Box>
                     <Box m={4}>
                         <Text color="white" fontSize="3xl">
-                            Divvies: {userDivBalance ? formatEther(userDivBalance.toString()) : 0}
+                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(7) : 0}
                         </Text>
                     </Box>
                     <Box m={4}>

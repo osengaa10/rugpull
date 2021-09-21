@@ -6,9 +6,9 @@ import {
     useGetTimeLeft,
     useContractMethod,
     useTotalTime,
-    useWinner
+    useWinner,
+    useWhoWon
 } from "../hooks";
-import { render } from "@testing-library/react";
 
 
 export const breakpoints = createBreakpoints({
@@ -24,9 +24,11 @@ export default function JackpotCountdown() {
     const timeLeft = useGetTimeLeft();
     const totalTime = useTotalTime();
     const winner = useWinner();
+    const whoWon = useWhoWon();
     const { state: jackpotPayoutState, send: jackpotPayout } = useContractMethod("jackpotPayout");
     const [timeLeftState, setTimeLeftState] = useState(timeLeft);
     const [totalTimeState, setTotalTimeState] = useState(totalTime);
+    const [userWhoWon, setUserWhoWon] = useState(String(whoWon));
 
     // console.log("totalTime:")
     // console.log(totalTime);
@@ -37,6 +39,8 @@ export default function JackpotCountdown() {
         console.log("timeLeftState:", timeLeftState);
         setTotalTimeState(totalTime ? totalTime.toNumber(): 0)
         console.log("totalTimeState:", totalTimeState);
+        setUserWhoWon(whoWon ? whoWon : '');
+        console.log("userWhoWon: ", whoWon);
       });
 
     function payWinner() {
@@ -57,7 +61,7 @@ export default function JackpotCountdown() {
                 game not started
             </div>   
         )
-    } else if (timeLeft.toNumber() <= 0) {
+    } else if (timeLeft.toNumber() <= 0 && userWhoWon == '0x0000000000000000000000000000000000000000') {
         console.log("TIMER IS AT ZERO!", timeLeft.toNumber());
         return (
             <Flex direction="column" align="center" mt="4">
@@ -67,12 +71,23 @@ export default function JackpotCountdown() {
                 <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
                     won!
                 </Text>
+            </Flex>
+        )
+    } else if (timeLeft.toNumber() <= 0 && userWhoWon != '0x0000000000000000000000000000000000000000') {
+        return (
+            <Flex direction="column" align="center" mt="4">
+                <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
+                    {winner}
+                </Text>
+                <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
+                    You won!
+                </Text>
                 <Box align="center">
                     <Button 
                         colorScheme="purple" 
                         size="lg"
                         onClick={payWinner}>
-                            payout winner
+                            Claim Prize!
                     </Button>
                     <Text fontSize="16px">This button sends the eth the {winner}'s address.</Text>
                 </Box>  

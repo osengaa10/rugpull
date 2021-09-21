@@ -4,7 +4,6 @@ import Layout from "./components/Layout";
 import ConnectButton from "./components/ConnectButton";
 import AccountModal from "./components/AccountModal";
 import Keys from "./components/Keys";
-import Token from "./components/Token";
 import RulesButton from "./components/RulesButton";
 import RulesModal from "./components/RulesModal";
 import "@fontsource/inter";
@@ -22,11 +21,8 @@ function App() {
   // const { isOpen: isConnectOpen, onOpen: onConnectOpen, onClose: onConnectClose } = useDisclosure();
   return (
     <div>
-    <Router>
     <ChakraProvider theme={theme}>
       <Layout>
-        <Switch>
-          <Route exact path="/">
           <Flex>
             <Box p="2">
               <ConnectButton handleOpenModal={onOpen} />
@@ -39,15 +35,9 @@ function App() {
             </Box>
           </Flex>
             <Keys />
-          </Route>
-          {/* <Route path="/token">
-            <Token />
-          </Route> */}
-        </Switch>
       </Layout>
         
     </ChakraProvider>
-    </Router>
     </div>
   );
 }

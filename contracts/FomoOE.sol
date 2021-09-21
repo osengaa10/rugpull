@@ -6,12 +6,11 @@ contract FomoOE {
     uint public startTime;
     uint public totalTime;
     uint public timeLeft;
-    address owner;
     address winning;
     uint public balanceReceived;
-    uint public keyPrice = 100 wei;
+    // uint public keyPrice = 100 wei;
     // // Uncomment when testing is complete
-    // uint public keyPrice = 3366666666666 wei;
+    uint public keyPrice = 3366666666666 wei;
     // // Uncomment when testing is complete
     uint public totalKeys;
     uint public divPool;
@@ -29,16 +28,15 @@ contract FomoOE {
     event contractBalance(uint _balanceReceived);
     event currentKeyPrice(uint keyPrice);
     
-    constructor() {
-        owner = msg.sender;
-        
-    }
     function restartGame() public {
         require(getTimeLeft() == 0, "game is still in play");
+        require(msg.sender == winning, "you are not the winner");
         letTheGamesBegin();
     }
     function letTheGamesBegin() private {
+        // // Uncomment when testing is complete
         // totalTime = block.timestamp + 86400;
+        // // Uncomment when testing is complete
         totalTime = block.timestamp + 60;
     }
     function getTimeLeft() public view returns(uint) {
@@ -60,7 +58,6 @@ contract FomoOE {
         uint floor = msg.value/2;
         jackpot += floor;
         divPool += msg.value - floor; 
-        // jackpot += msg.value/2;
         divTracker[msg.sender]._keyBalance += _amount;
         totalKeys += _amount;
         if (_amount*30 > 86400 - (totalTime-block.timestamp)) {
@@ -70,11 +67,11 @@ contract FomoOE {
             totalTime += _amount*30;
         }
         // // Uncomment when testing is complete
-        // uint numerator = keyPrice*100;
-        // keyPrice = keyPrice + numerator/10000;
+        uint numerator = keyPrice*100;
+        keyPrice = keyPrice + numerator/10000;
         // // Uncomment when testing is complete
 
-        keyPrice = keyPrice + 400;
+        // keyPrice = keyPrice + 400;
         winning = msg.sender;
         emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot, winning);   
     } 
@@ -123,6 +120,13 @@ contract FomoOE {
         // require(msg.sender == winning, "you are not the winner");
         address payable to = payable(winning);
         to.transfer(jackpot);
+    }
+
+    function whoWon(address _userAddress) public view returns(address winner){
+        if (getTimeLeft() == 0 && _userAddress == winning) {
+            winner = _userAddress;
+            return winner;
+        }
     }
 
 }

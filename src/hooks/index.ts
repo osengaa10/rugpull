@@ -119,6 +119,17 @@ export function useWinner() {
   return winner;
 }
 
+export function useWhoWon() {
+  const { activateBrowserWallet, account } = useEthers();
+  const [won]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "whoWon",
+    args: [account],
+  }) ?? [];
+  return won;
+}
+
 // // COMMENT WHEN ISSUE IS PATCHED
 // //================================
 //   export function useContractMethod(methodName: string) {
