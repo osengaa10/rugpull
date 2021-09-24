@@ -3,6 +3,7 @@
 pragma solidity ^0.8.4;
 
 contract FomoOE {
+
     uint public startTime;
     uint public totalTime;
     uint public timeLeft;
@@ -28,11 +29,11 @@ contract FomoOE {
     event contractBalance(uint _balanceReceived);
     event currentKeyPrice(uint keyPrice);
     
-    function restartGame() public {
-        require(getTimeLeft() == 0, "game is still in play");
-        require(msg.sender == winning, "you are not the winner");
-        letTheGamesBegin();
-    }
+    // function restartGame() public {
+    //     require(getTimeLeft() == 0, "game is still in play");
+    //     require(msg.sender == winning, "you are not the winner");
+    //     letTheGamesBegin();
+    // }
     function letTheGamesBegin() private {
         // // Uncomment when testing is complete
         // totalTime = block.timestamp + 86400;
@@ -117,9 +118,10 @@ contract FomoOE {
     function jackpotPayout() public {
         require(getTimeLeft() == 0, "game is still in play");
         require(jackpot > 0, "No money in jackpot");
-        // require(msg.sender == winning, "you are not the winner");
+        require(msg.sender == winning, "you are not the winner");
         address payable to = payable(winning);
         to.transfer(jackpot);
+        jackpot = 0;
     }
 
     function whoWon(address _userAddress) public view returns(address winner){

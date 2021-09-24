@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import { Contract } from "@ethersproject/contracts";
-import { ethers } from "ethers";
 import { formatEther } from "@ethersproject/units";
-import Countdown from 'react-countdown';
-import Timer from "./Timer";
 import JackpotCountdown from "./JackpotCountdown";
 import { 
     Flex, 
@@ -13,7 +9,6 @@ import {
     NumberInput,
     NumberInputField,
     Divider,
-    SimpleGrid,
     Wrap,
     WrapItem,
     Tooltip,
@@ -46,52 +41,23 @@ export default function Keys() {
     const userDivBalance = useGetUserDivBalance().toString();
     const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
-    // const { state, send: getUserKeyBalance } = useContractMethod("getUserKeyBalance");
     const [input, setInput] = useState("");
-
-    // useEffect(() => {
-    //     contract.on("keysPurchased", (_userKeyBalance, _totalKeys, _keyPrice, _divPool, _jackpot, event) => {
-    //         console.log("_userKeyBalance");
-    //         console.log(_userKeyBalance);
-    //         setUserKeyBalance1(userKeyBalance1);
-    //         console.log("_totalKeys");
-    //         console.log(_totalKeys);
-    //         console.log("_keyPrice");
-    //         console.log(_keyPrice);
-    //         event.removeListener();
-    //         // The event object contains the verbatim log data, the
-    //         // EventFragment and functions to fetch the block,
-    //         // transaction and receipt and event functions
-    //     });
-    // });
 
     function handleWithdrawDivvies() {
         console.log("HANDLE WITHDRAW DIVVIES:");
         withdrawDivvies();
-        // console.log("userWithdrawDivvies");
-        // console.log(userWithdrawDivvies);
     }
 
     function handlePurchaseKeys() {
         const _amount = parseInt(input);
         if (_amount) {
-            console.log("HANDLE PURCHASE KEYS:");
-            console.log("_amount: ");
-            console.log(_amount);
-            console.log("keyPrice: ");
-            console.log(keyPrice);
-            console.log("_amount*keyPrice.toNumber(): ");
-            console.log(_amount*keyPrice.toNumber());
             purchaseKeys(_amount, {
                 value: _amount*keyPrice.toNumber()
             });
-        }
-        
+        }  
     }
 
     function handleInput(valueAsString: string, valueAsNumber: number) {
-        // console.log("timeLeft:");
-        // console.log(timeLeft.toNumber());
         console.log(Date.now());
         setInput(valueAsString);
     }
