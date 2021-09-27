@@ -6,10 +6,10 @@
 // export const fomoOEContractAddress = "0x3a41b7D7e48Ff2De95c7fa410d138ABBb1abD88C";
 
 // Hardhat localhost popOS.
-export const fomoOEContractAddress = "0xff6524e1c2a3FF420a490f4711b072e66Dd0E52F";
+// export const fomoOEContractAddress = "0xff6524e1c2a3ff420a490f4711b072e66dd0e52f";
 
-// // Hardhat arbitrum rinkeby
-// export const fomoOEContractAddress = "0x164E851Dd0fB6D27599Da250C21E298f33Ac0623";
+// Hardhat arbitrum rinkeby
+export const fomoOEContractAddress = "0xff6524e1c2a3ff420a490f4711b072e66dd0e52f";
 
 
 // Truffle/localhost:8545 address mac OS

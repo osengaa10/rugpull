@@ -12,7 +12,11 @@ import { useEthers } from "@usedapp/core";
 
 declare const window: any;
 
+// const provider = new ethers.providers.Web3Provider(window.ethereum);
 const provider = new ethers.providers.Web3Provider(window.ethereum);
+console.log("provider:")
+console.log(provider)
+
 const signer = provider.getSigner()
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi);
 // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)

@@ -14,7 +14,6 @@ import { DAppProvider } from "@usedapp/core";
 // }
 
 
-
 // ReactDOM.render(
 //   <React.StrictMode>
 //     <DAppProvider config={{}}>
@@ -23,6 +22,11 @@ import { DAppProvider } from "@usedapp/core";
 //   </React.StrictMode>,
 //   document.getElementById("root")
 // );
+
+
+
+// 'https://rinkeby.arbitrum.io/rpc'
+// 'https://arbitrum-rinkeby.infura.io/v3/85e32b8991b84888a4f7d9e2a44a957b'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -42,3 +46,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+
