@@ -5,13 +5,6 @@ import { Contract } from "@ethersproject/contracts";
 import { useContractCall, useContractFunction } from "@usedapp/core";
 //================================
 
-
-// // COMMENT WHEN ISSUE IS PATCHED
-// //================================
-// import { useContractCall} from "@usedapp/core";
-// import { useContractFunction } from "./workaround";
-// //================================
-
 import fomoOEContractAbi from "../contracts/FomoOE.json";
 // import fomoOEContractAbi from "../abi/FomoOE.json";
 import { fomoOEContractAddress } from "../contracts"
@@ -26,11 +19,6 @@ const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi
 //================================
 export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, provider);
 //================================
-
-// // COMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
-// //================================
-// export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, signer);
-// //================================
 
 
 // declare const account: any;
@@ -133,7 +121,7 @@ export function useWhoWon() {
 // // COMMENT WHEN ISSUE IS PATCHED
 // //================================
 //   export function useContractMethod(methodName: string) {
-//     const { state, send } = useContractFunction(contract, methodName, 5, {});
+//     const { state, send } = useContractFunction(contract, methodName, {});
 //     // console.log("{state, send}: hook");
 //     // console.log({state, send});
 //     return { state, send };
