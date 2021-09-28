@@ -35,10 +35,10 @@ contract FomoOE {
     //     letTheGamesBegin();
     // }
     function letTheGamesBegin() private {
-        // // Uncomment when testing is complete
-        // totalTime = block.timestamp + 86400;
-        // // Uncomment when testing is complete
-        totalTime = block.timestamp + 60;
+        // Uncomment when testing is complete
+        totalTime = block.timestamp + 86400;
+        // Uncomment when testing is complete
+        // totalTime = block.timestamp + 60;
     }
     function getTimeLeft() public view returns(uint) {
         if (totalKeys == 0) {

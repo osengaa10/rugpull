@@ -1,11 +1,13 @@
 
 const path = require("path");
 const fs = require('fs')
-const mnemonic = fs.readFileSync(".secret").toString() || "01234567890123456789"
+const mnemonic = fs.readFileSync(".secret2").toString() || "01234567890123456789"
 const wrapProvider = require('arb-ethers-web3-bridge').wrapProvider;
 const HDWalletProvider = require('@truffle/hdwallet-provider')
-const arbProviderUrl = 'https://arbitrum-rinkeby.infura.io/v3/3851c6c409d144a4a10cc0648c41be49'
+const arbProviderUrl = `https://arbitrum-rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`
 
+require('dotenv').config();
+const INFURA_PROJECT_ID = process.env["INFURA_PROJECT_ID"];
 // module.exports = {
 //   arbitrum: {
 //     provider: function () {
@@ -23,6 +25,7 @@ const arbProviderUrl = 'https://arbitrum-rinkeby.infura.io/v3/3851c6c409d144a4a1
 
 // https://rinkeby.arbitrum.io/rpc
 
+
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
@@ -35,7 +38,7 @@ module.exports = {
     arbitrum: {
       provider: function() {
         return wrapProvider(
-          new HDWalletProvider(mnemonic, 'https://arbitrum-rinkeby.infura.io/v3/85e32b8991b84888a4f7d9e2a44a957b')
+          new HDWalletProvider(mnemonic, `https://arbitrum-rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`)
         )
       },
       network_id: 421611,
