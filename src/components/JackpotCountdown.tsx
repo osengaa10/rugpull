@@ -25,7 +25,7 @@ export default function JackpotCountdown() {
     const totalTime = useTotalTime();
     const winner = useWinner();
     const whoWon = useWhoWon();
-    const { state: jackpotPayoutState, send: jackpotPayout } = useContractMethod("jackpotPayout");
+    const { send: jackpotPayout } = useContractMethod("jackpotPayout");
     const [timeLeftState, setTimeLeftState] = useState(timeLeft);
     const [totalTimeState, setTotalTimeState] = useState(totalTime);
     const [userWhoWon, setUserWhoWon] = useState(String(whoWon));
@@ -36,11 +36,11 @@ export default function JackpotCountdown() {
 
     useEffect(() => {
         setTimeLeftState(timeLeft ? timeLeft.toNumber(): -1)
-        console.log("timeLeftState:", timeLeftState);
+        // console.log("timeLeftState:", timeLeftState);
         setTotalTimeState(totalTime ? totalTime.toNumber(): 0)
-        console.log("totalTimeState:", totalTimeState);
+        // console.log("totalTimeState:", totalTimeState);
         setUserWhoWon(whoWon ? whoWon : '');
-        console.log("userWhoWon: ", whoWon);
+        // console.log("userWhoWon: ", whoWon);
       });
 
     function payWinner() {
@@ -61,7 +61,7 @@ export default function JackpotCountdown() {
                 game not started
             </div>   
         )
-    } else if (timeLeft.toNumber() <= 0 && userWhoWon == '0x0000000000000000000000000000000000000000') {
+    } else if (timeLeft.toNumber() <= 0 && userWhoWon === '0x0000000000000000000000000000000000000000') {
         console.log("TIMER IS AT ZERO!", timeLeft.toNumber());
         return (
             <Flex direction="column" align="center" mt="4">
@@ -73,7 +73,7 @@ export default function JackpotCountdown() {
                 </Text>
             </Flex>
         )
-    } else if (timeLeft.toNumber() <= 0 && userWhoWon != '0x0000000000000000000000000000000000000000') {
+    } else if (timeLeft.toNumber() <= 0 && userWhoWon !== '0x0000000000000000000000000000000000000000') {
         return (
             <Flex direction="column" align="center" mt="4">
                 <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
@@ -94,8 +94,8 @@ export default function JackpotCountdown() {
             </Flex>
         )
     } else {
-        console.log("TIMER GREATER THAN ZERO!", timeLeft.toNumber());
-        console.log("totalTime: ", totalTime.toNumber());
+        console.log("SECONDS REMAINING: ", timeLeft.toNumber());
+        // console.log("totalTime: ", totalTime.toNumber());
         return (
             <Flex direction="column" align="center" mt="4">
                 <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { formatEther } from "@ethersproject/units";
 import JackpotCountdown from "./JackpotCountdown";
 import { 
@@ -14,10 +14,9 @@ import {
     Tooltip,
     Spacer
 } from "@chakra-ui/react";
-import { createBreakpoints } from "@chakra-ui/theme-tools";
+// import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { InfoOutlineIcon } from '@chakra-ui/icons'
 import { 
-    contract,
     useKeyPrice, 
     useJackpot, 
     useContractMethod,
@@ -26,25 +25,24 @@ import {
 } from "../hooks";
 
 
-const breakpoints = createBreakpoints({
-  sm: "30em",
-  md: "48em",
-  lg: "62em",
-  xl: "80em",
-  "2xl": "96em",
-})
+// const breakpoints = createBreakpoints({
+//   sm: "30em",
+//   md: "48em",
+//   lg: "62em",
+//   xl: "80em",
+//   "2xl": "96em",
+// })
 
 export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
     const userKeyBalance = useGetUserKeyBalance();
     const userDivBalance = useGetUserDivBalance().toString();
-    const { state: purchaseKeysState, send: purchaseKeys } = useContractMethod("purchaseKeys");
-    const { state: withdrawDivviesState, send: withdrawDivvies } = useContractMethod("withdrawDivvies");
+    const { send: purchaseKeys } = useContractMethod("purchaseKeys");
+    const { send: withdrawDivvies } = useContractMethod("withdrawDivvies");
     const [input, setInput] = useState("");
 
     function handleWithdrawDivvies() {
-        console.log("HANDLE WITHDRAW DIVVIES:");
         withdrawDivvies();
     }
 
@@ -58,7 +56,6 @@ export default function Keys() {
     }
 
     function handleInput(valueAsString: string, valueAsNumber: number) {
-        console.log(Date.now());
         setInput(valueAsString);
     }
 
@@ -72,7 +69,7 @@ export default function Keys() {
         </Box>
         <Box>
             <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
-                Japot value: {jackpot ? parseFloat(formatEther(jackpot.toNumber())).toFixed(7) : 0} ETH
+                Jackpot value: {jackpot ? parseFloat(formatEther(jackpot.toNumber())).toFixed(7) : 0} ETH
             </Text>
         </Box>
         <Divider orientation="horizontal" />

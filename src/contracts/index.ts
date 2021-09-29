@@ -5,11 +5,13 @@
 // // Truffle/localhost:8545 address PopOS 
 // export const fomoOEContractAddress = "0x3a41b7D7e48Ff2De95c7fa410d138ABBb1abD88C";
 
-// Hardhat localhost popOS.
-// export const fomoOEContractAddress = "0xff6524e1c2a3ff420a490f4711b072e66dd0e52f";
 
-// Hardhat arbitrum rinkeby
-export const fomoOEContractAddress = "0xff6524e1c2a3ff420a490f4711b072e66dd0e52f";
+// Hardhat localhost popOS.
+// export const fomoOEContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+
+
+// // Hardhat arbitrum rinkeby
+// export const fomoOEContractAddress = "0xff6524e1c2a3ff420a490f4711b072e66dd0e52f";
 
 
 // Truffle/localhost:8545 address mac OS
@@ -17,3 +19,7 @@ export const fomoOEContractAddress = "0xff6524e1c2a3ff420a490f4711b072e66dd0e52f
 
 // // Truffle/localhost:8545 address Ubuntu Desktop
 // export const fomoOEContractAddress = "0x5FF1B4246Ba049EA656B2fdeD4A0Daf7f4B15548";
+
+
+// Hardhat Polygon Testnet (Mumbai)
+export const fomoOEContractAddress = "0x03083481f9E36C56b20605A492778827D3ec7EC1";

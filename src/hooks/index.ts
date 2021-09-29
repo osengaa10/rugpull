@@ -17,7 +17,6 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 console.log("provider:")
 console.log(provider)
 
-const signer = provider.getSigner()
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi);
 // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
 //================================
@@ -56,7 +55,7 @@ export function useJackpot() {
 }
 
 export function useGetUserKeyBalance() {
-  const { activateBrowserWallet, account } = useEthers();
+  const { account } = useEthers();
   const divTracker: any = useContractCall({
     abi: fomoOEContractInterface,
     address: fomoOEContractAddress,
@@ -69,7 +68,7 @@ export function useGetUserKeyBalance() {
 }
   
 export function useGetUserDivBalance() {
-  const { activateBrowserWallet, account } = useEthers();
+  const { account } = useEthers();
   const userDivvies: any = useContractCall({
     abi: fomoOEContractInterface,
     address: fomoOEContractAddress,
@@ -112,7 +111,7 @@ export function useWinner() {
 }
 
 export function useWhoWon() {
-  const { activateBrowserWallet, account } = useEthers();
+  const { account } = useEthers();
   const [won]: any = useContractCall({
     abi: fomoOEContractInterface,
     address: fomoOEContractAddress,

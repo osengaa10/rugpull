@@ -1,7 +1,5 @@
-import { Button, Box, Text } from "@chakra-ui/react";
-import { useEthers, useEtherBalance } from "@usedapp/core";
-import { formatEther } from "@ethersproject/units";
-import Identicon from "./Identicon";
+import { Button } from "@chakra-ui/react";
+
 
 type Props = {
   handleOpenRulesModal: any;

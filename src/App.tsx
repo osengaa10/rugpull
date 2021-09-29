@@ -7,12 +7,6 @@ import Keys from "./components/Keys";
 import RulesButton from "./components/RulesButton";
 import RulesModal from "./components/RulesModal";
 import "@fontsource/inter";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 
 
 function App() {
