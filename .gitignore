@@ -2,3 +2,4 @@ node_modules
 .secret
 .secret2
 arbitrum
+.env
