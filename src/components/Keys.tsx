@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { formatEther } from "@ethersproject/units";
+import { ethers, utils } from 'ethers';
 import JackpotCountdown from "./JackpotCountdown";
 import { 
     Flex, 
@@ -47,10 +48,29 @@ export default function Keys() {
     }
 
     function handlePurchaseKeys() {
-        const _amount = parseInt(input);
+        console.log("input")
+        console.log(keyPrice)
+        // const _amount = parseInt(input);
+        const _amount = BigInt(input);
+        const _keyPrice = BigInt(keyPrice)
+        const totalPrice = _amount * _keyPrice
+        console.log("totalPrice")
+        console.log(totalPrice)
+        const totalPriceString = totalPrice.toString()
+        
+
+        // let totalAmount = parseFloat(shareAmount+0.000000000000000001).toFixed(18)
+        // const totalPrice = ethers.utils.parseUnits(totalAmount.toString(), 'ether')
+
+        console.log("totalPriceString")
+        console.log(totalPriceString)
+        console.log(ethers.utils.parseUnits(totalPriceString, "wei"))
         if (_amount) {
+            // purchaseKeys(_amount, {
+            //     value: _amount*keyPrice.toNumber()
+            // });
             purchaseKeys(_amount, {
-                value: _amount*keyPrice.toNumber()
+                value: ethers.utils.parseUnits(totalPriceString, "wei")
             });
         }  
     }
@@ -69,7 +89,7 @@ export default function Keys() {
         </Box>
         <Box>
             <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
-                Jackpot value: {jackpot ? parseFloat(formatEther(jackpot.toNumber())).toFixed(7) : 0} ETH
+                Jackpot value: {jackpot ? parseFloat(formatEther(jackpot.toString())).toFixed(3) : 0} MATIC
             </Text>
         </Box>
         <Divider orientation="horizontal" />
@@ -85,7 +105,9 @@ export default function Keys() {
                     </Flex>  
                     <Box mt={4}>
                         <Text color="white" fontSize="3xl">
-                            Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0}
+                            {/* Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0} */}
+                            Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toString())).toFixed(5) : 0}
+
                         </Text>
                     </Box>
                     <Box m={4}>
@@ -122,7 +144,7 @@ export default function Keys() {
                     </Box>
                     <Box m={4}>
                         <Text color="white" fontSize="3xl">
-                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(7) : 0}
+                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(5) : 0}
                         </Text>
                     </Box>
                     <Box m={4}>

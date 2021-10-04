@@ -11,7 +11,9 @@ contract FomoOE {
     uint public balanceReceived;
     // uint public keyPrice = 100 wei;
     // // Uncomment when testing is complete
-    uint public keyPrice = 3366666666666 wei;
+    uint public keyPrice = 3366666666666000 wei;
+    // uint public keyPrice = 0.01 ether;
+
     // // Uncomment when testing is complete
     uint public totalKeys;
     uint public divPool;

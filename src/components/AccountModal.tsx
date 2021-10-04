@@ -111,8 +111,7 @@ export default function AccountModal({ isOpen, onClose }: Props) {
                   color: "whiteAlpha.800",
                 }}
               >
-                <CopyIcon mr={1} />
-                Copy Address
+           
               </Button>
               <Link
                 fontSize="sm"
@@ -134,7 +133,7 @@ export default function AccountModal({ isOpen, onClose }: Props) {
           </Box>
         </ModalBody>
 
-        <ModalFooter
+        {/* <ModalFooter
           justifyContent="end"
           background="gray.700"
           borderBottomLeftRadius="3xl"
@@ -149,7 +148,7 @@ export default function AccountModal({ isOpen, onClose }: Props) {
           >
             Your transactions willl appear here...
           </Text>
-        </ModalFooter>
+        </ModalFooter> */}
       </ModalContent>
     </Modal>
   );
