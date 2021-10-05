@@ -110,7 +110,6 @@ export default function Keys() {
                         <Text color="white" fontSize="3xl">
                             {/* Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0} */}
                             Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toString())).toFixed(5) : 0}
-
                         </Text>
                     </Box>
                     <Box m={4}>
@@ -129,6 +128,11 @@ export default function Keys() {
                         <Button colorScheme="purple" size="lg" onClick={handlePurchaseKeys}>
                             Buy {input} Keys
                         </Button> 
+                        <Text color="white" fontSize="sm">
+                            {/* Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0} */}
+                            Cost: {keyPrice ? parseFloat(formatEther((keyPrice*Number(input)).toString())).toFixed(5) : 0} MATIC
+
+                        </Text>
                     </Box>
                 </Box>
             </WrapItem>

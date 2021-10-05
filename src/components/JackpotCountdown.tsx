@@ -96,7 +96,7 @@ export default function JackpotCountdown() {
             </Flex>
         )
     } else {
-        console.log("SECONDS REMAINING: ", timeLeft.toNumber());
+        // console.log("SECONDS REMAINING: ", timeLeft.toNumber());
         console.log("HH:MM:SS REMAINING:" , new Date(timeLeft.toNumber() * 1000).toISOString().substr(11, 8))
         return (
             <Flex direction="column" align="center" mt="4">
