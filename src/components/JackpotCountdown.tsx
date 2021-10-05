@@ -29,6 +29,7 @@ export default function JackpotCountdown() {
     const [timeLeftState, setTimeLeftState] = useState(timeLeft);
     const [totalTimeState, setTotalTimeState] = useState(totalTime);
     const [userWhoWon, setUserWhoWon] = useState(String(whoWon));
+    const [startTime, setStartTime] = useState(Date.now())
 
     // console.log("totalTime:")
     // console.log(totalTime);
@@ -41,7 +42,8 @@ export default function JackpotCountdown() {
         // console.log("totalTimeState:", totalTimeState);
         setUserWhoWon(whoWon ? whoWon : '');
         // console.log("userWhoWon: ", whoWon);
-      });
+        setStartTime(Date.now())
+        },[timeLeft]);
 
     function payWinner() {
         if (totalTime.toNumber()*1000 <= Date.now()) {
@@ -95,7 +97,7 @@ export default function JackpotCountdown() {
         )
     } else {
         console.log("SECONDS REMAINING: ", timeLeft.toNumber());
-        // console.log("totalTime: ", totalTime.toNumber());
+        console.log("HH:MM:SS REMAINING:" , new Date(timeLeft.toNumber() * 1000).toISOString().substr(11, 8))
         return (
             <Flex direction="column" align="center" mt="4">
                 <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
@@ -105,8 +107,9 @@ export default function JackpotCountdown() {
                     is winning!
                 </Text>
                 <span>
-                    {/* <Countdown date={totalTime ? totalTime.toNumber()*1000 : 0} /> <br/> */}
-                    <Countdown date={Date.now() + timeLeft*1000} />
+                    {/* <Countdown date={Date.now() + timeLeft*1000} /> */}
+                    <Countdown date={startTime + timeLeft*1000} />
+
                 </span>
             </Flex>
         )

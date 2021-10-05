@@ -57,11 +57,6 @@ export default function Keys() {
         console.log("totalPrice")
         console.log(totalPrice)
         const totalPriceString = totalPrice.toString()
-        
-
-        // let totalAmount = parseFloat(shareAmount+0.000000000000000001).toFixed(18)
-        // const totalPrice = ethers.utils.parseUnits(totalAmount.toString(), 'ether')
-
         console.log("totalPriceString")
         console.log(totalPriceString)
         console.log(ethers.utils.parseUnits(totalPriceString, "wei"))
@@ -75,8 +70,16 @@ export default function Keys() {
         }  
     }
 
-    function handleInput(valueAsString: string, valueAsNumber: number) {
-        setInput(valueAsString);
+    function handleInput(valueAsString: string) {
+        console.log("valueAsString")
+        console.log(valueAsString)
+        if (valueAsString.includes(".")) {
+            alert("Please input whole number")
+            setInput("")
+        } else {
+            setInput(valueAsString)
+        }
+        
     }
 
     return (
