@@ -12,7 +12,7 @@ export default function Layout({ children }: Props) {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      h="100vh"
+      minH="100vh"
       bgGradient="linear(to-t, #7928CA, #FF0080)"
       
     >

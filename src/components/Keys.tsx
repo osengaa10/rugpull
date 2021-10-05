@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { formatEther } from "@ethersproject/units";
-import { ethers, utils } from 'ethers';
+import { ethers } from 'ethers';
 import JackpotCountdown from "./JackpotCountdown";
 import { 
     Flex, 
@@ -71,8 +71,8 @@ export default function Keys() {
     }
 
     function handleInput(valueAsString: string) {
-        console.log("valueAsString")
-        console.log(valueAsString)
+        // console.log("valueAsString")
+        // console.log(valueAsString)
         if (valueAsString.includes(".")) {
             alert("Please input whole number")
             setInput("")
