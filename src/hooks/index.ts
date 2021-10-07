@@ -64,6 +64,16 @@ export function useGiveToJackpot() {
   return giveToJackpot;
 }
 
+export function useTotalKeys() {
+  const [totalKeys]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "totalKeys",
+    args: [],
+  }) ?? [];
+  return totalKeys;
+}
+
 export function useJackpot() {
   const [jackpot]: any = useContractCall({
     abi: fomoOEContractInterface,

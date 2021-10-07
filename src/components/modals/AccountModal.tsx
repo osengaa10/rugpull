@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useEthers } from "@usedapp/core";
-import Identicon from "./Identicon";
+import Identicon from "../Identicon";
 
 type Props = {
   isOpen: any;

@@ -1,13 +1,15 @@
 import { ChakraProvider, useDisclosure, Box, Spacer, Wrap, WrapItem } from "@chakra-ui/react";
 import theme from "./theme";
 import Layout from "./components/Layout";
-import ConnectButton from "./components/ConnectButton";
-import AccountModal from "./components/AccountModal";
+import ConnectButton from "./components/modals/ConnectButton";
+import AccountModal from "./components/modals/AccountModal";
 import Keys from "./components/Keys";
-import RulesButton from "./components/RulesButton";
-import RulesModal from "./components/RulesModal";
-import VoteButton from "./components/VoteButton";
-import VoteModal from "./components/VoteModal";
+import RulesButton from "./components/modals/RulesButton";
+import RulesModal from "./components/modals/RulesModal";
+import VoteButton from "./components/modals/VoteButton";
+import VoteModal from "./components/modals/VoteModal";
+import NotesModal from "./components/modals/NotesModal";
+import NotesButton from "./components/modals/NotesButton";
 import "@fontsource/inter";
 
 
@@ -15,6 +17,7 @@ function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isRulesOpen, onOpen: onRulesOpen, onClose: onRulesClose } = useDisclosure();
   const { isOpen: isVoteOpen, onOpen: onVoteOpen, onClose: onVoteClose } = useDisclosure();
+  const { isOpen: isNotesOpen, onOpen: onNotesOpen, onClose: onNotesClose } = useDisclosure();
 
   // const { isOpen: isConnectOpen, onOpen: onConnectOpen, onClose: onConnectClose } = useDisclosure();
   return (
@@ -40,6 +43,13 @@ function App() {
             <Box p="2">
               <VoteButton handleOpenVoteModal={onVoteOpen} />
               <VoteModal isOpen={isVoteOpen} onClose={onVoteClose} />
+            </Box>
+            </WrapItem>
+            <Spacer />
+            <WrapItem>
+            <Box p="2">
+              <NotesButton handleOpenNotesModal={onNotesOpen} />
+              <NotesModal isOpen={isNotesOpen} onClose={onNotesClose} />
             </Box>
             </WrapItem>          
           </Wrap>

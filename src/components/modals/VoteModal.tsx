@@ -18,7 +18,7 @@ import {
     useContractMethod,
     useGiveToDeveloper,
     useGiveToJackpot
-} from "../hooks";
+} from "../../hooks";
 
   type Props = {
     isOpen: any;

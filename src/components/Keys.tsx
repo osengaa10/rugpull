@@ -23,6 +23,7 @@ import {
     useContractMethod,
     useGetUserKeyBalance,
     useGetUserDivBalance,
+    useTotalKeys
 } from "../hooks";
 
 
@@ -37,6 +38,7 @@ import {
 export default function Keys() {
     const keyPrice = useKeyPrice();
     const jackpot = useJackpot();
+    const totalKeys = useTotalKeys();
     const userKeyBalance = useGetUserKeyBalance();
     const userDivBalance = useGetUserDivBalance().toString();
     const { send: purchaseKeys } = useContractMethod("purchaseKeys");
@@ -101,8 +103,8 @@ export default function Keys() {
                 <Box boxShadow="dark-lg" bgGradient="linear(to-t, #7928CA, #FF0080)" m={4} borderWidth="2px" align="center" borderRadius="lg">
                 <Flex me="2" mt="2" mb="0">
                         <Spacer />
-                        <Tooltip hasArrow label="After each purchase, 30 seconds gets added to the countdown per key (hard cap is 24hr)
-                            and price increases by 1%." bg="gray.300" color="black">
+                        <Tooltip hasArrow label="After each purchase, key price increases and 30 seconds gets added to the countdown PER key (hard cap is 24hr)." 
+                            bg="gray.300" color="black">
                             <InfoOutlineIcon/>
                         </Tooltip>
                     </Flex>  
@@ -131,7 +133,6 @@ export default function Keys() {
                         <Text color="white" fontSize="sm">
                             {/* Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0} */}
                             Cost: {keyPrice ? parseFloat(formatEther((keyPrice*Number(input)).toString())).toFixed(5) : 0} MATIC
-
                         </Text>
                     </Box>
                 </Box>
@@ -161,6 +162,10 @@ export default function Keys() {
                         onClick={handleWithdrawDivvies}>
                             Claim Divvies
                         </Button>
+                        <Text color="white" fontSize="sm">
+                            {/* Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0} */}
+                            Total Keys: {totalKeys ? totalKeys.toString() : 0} 
+                        </Text>
                     </Box>
                 </Box>
             </WrapItem>
