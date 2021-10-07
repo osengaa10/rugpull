@@ -8,14 +8,14 @@ type Props = {
 };
 
 export default function ConnectButton({ handleOpenModal }: Props) {
-  const { activateBrowserWallet, account } = useEthers();
+  const { activateBrowserWallet, account, chainId } = useEthers();
   const etherBalance = useEtherBalance(account);
 
   function handleConnectWallet() {
     activateBrowserWallet();
   }
 
-  return account ? (
+  return account && chainId == 80001 ? (
     <Box
       display="flex"
       alignItems="center"
@@ -71,7 +71,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
         borderColor: "blue.700",
       }}
     >
-      Connect to a wallet
+      Connect to MATIC wallet
     </Button>
   );
 }

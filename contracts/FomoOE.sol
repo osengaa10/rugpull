@@ -3,7 +3,10 @@
 pragma solidity ^0.8.4;
 
 contract FomoOE {
-
+    address developer;
+    uint public developerOnePercent;
+    uint public giveToDeveloper;
+    uint public giveToJackpot;
     uint public startTime;
     uint public totalTime;
     uint public timeLeft;
@@ -16,6 +19,7 @@ contract FomoOE {
 
     // // Uncomment when testing is complete
     uint public totalKeys;
+    uint public keyPurchases;
     uint public divPool;
     uint public jackpot;
 
@@ -23,6 +27,8 @@ contract FomoOE {
         uint _keyBalance;
         uint _divBalance;
         uint _withdrawnAmount;
+        bool _voted;
+        bool _boughtKeys;
     }
 
     mapping(address => Divvies) public divTracker;
@@ -31,6 +37,10 @@ contract FomoOE {
     event contractBalance(uint _balanceReceived);
     event currentKeyPrice(uint keyPrice);
     
+
+    constructor() {
+        developer = msg.sender;
+    }
     // function restartGame() public {
     //     require(getTimeLeft() == 0, "game is still in play");
     //     require(msg.sender == winning, "you are not the winner");
@@ -53,15 +63,20 @@ contract FomoOE {
         }
     }
     function purchaseKeys(uint _amount) public payable {
-        require(msg.value == keyPrice*_amount, "not enough to buy the key(s).");
+        require(msg.value >= keyPrice*_amount, "not enough to buy the key(s).");
         if (totalKeys == 0) {
             letTheGamesBegin();
         }
         require(getTimeLeft() > 0, "there is already a winner");
-        uint floor = msg.value/2;
+        uint devShareNumerator = msg.value*100;
+        uint devShare = devShareNumerator/10000;
+        uint gameShare = msg.value - devShare;
+        uint floor = gameShare/2;
+        developerOnePercent += devShare;
         jackpot += floor;
-        divPool += msg.value - floor; 
+        divPool += gameShare - floor; 
         divTracker[msg.sender]._keyBalance += _amount;
+        divTracker[msg.sender]._boughtKeys = true;
         totalKeys += _amount;
         if (_amount*30 > 86400 - (totalTime-block.timestamp)) {
             // totalTime = 86400 + block.timestamp;
@@ -70,9 +85,15 @@ contract FomoOE {
             totalTime += _amount*30;
         }
         // // Uncomment when testing is complete
-        uint numerator = keyPrice*100;
-        keyPrice = keyPrice + numerator/10000;
+        if (keyPurchases > 500) {
+            uint numerator = keyPrice*100;
+            keyPrice = keyPrice + numerator/10000;
+        } else {
+            uint numerator = keyPrice*50;
+            keyPrice = keyPrice + numerator/10000;
+        }
         // // Uncomment when testing is complete
+        keyPurchases += 1;
 
         // keyPrice = keyPrice + 400;
         winning = msg.sender;
@@ -130,6 +151,31 @@ contract FomoOE {
         if (getTimeLeft() == 0 && _userAddress == winning) {
             winner = _userAddress;
             return winner;
+        }
+    }
+
+    function developerOnePercentAllocation() public {
+        require(msg.sender == developer, "you aren't the developer of this contract.");
+        require(getTimeLeft() == 0, "game is still in play");
+        if (giveToDeveloper >= giveToJackpot) {
+            address payable to = payable(developer);
+            to.transfer(developerOnePercent);
+            
+        } else {
+            address payable to = payable(winning);
+            to.transfer(developerOnePercent);
+        }
+        developerOnePercent = 0;
+    }
+
+    function voteForOnePercent(bool _vote) public {
+        require(divTracker[msg.sender]._boughtKeys == true, "you need to buy at least one key to vote.");
+        require(divTracker[msg.sender]._voted == false, "you already voted.");
+        divTracker[msg.sender]._voted = true;
+        if (_vote == true) {
+            giveToDeveloper += 1;
+        } else {
+            giveToJackpot += 1;
         }
     }
 

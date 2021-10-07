@@ -5,17 +5,17 @@ import { Contract } from "@ethersproject/contracts";
 import { useContractCall, useContractFunction } from "@usedapp/core";
 //================================
 
-import fomoOEContractAbi from "../contracts/FomoOE.json";
+import fomoOEContractAbi from "../contracts/artifacts/contracts/FomoOE.sol/FomoOE.json";
 // import fomoOEContractAbi from "../abi/FomoOE.json";
-import { fomoOEContractAddress } from "../contracts"
+import { fomoOEContractAddress } from "../contracts";
 import { useEthers } from "@usedapp/core";
 
 declare const window: any;
 
 // const provider = new ethers.providers.Web3Provider(window.ethereum);
 const provider = new ethers.providers.Web3Provider(window.ethereum);
-console.log("provider:")
-console.log(provider)
+// console.log("provider:")
+// console.log(provider)
 
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi);
 // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
@@ -42,6 +42,26 @@ export function useKeyPrice() {
     args: [],
   }) ?? [];
   return keyPrice;
+}
+
+export function useGiveToDeveloper() {
+  const [giveToDeveloper]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "giveToDeveloper",
+    args: [],
+  }) ?? [];
+  return giveToDeveloper;
+}
+
+export function useGiveToJackpot() {
+  const [giveToJackpot]: any = useContractCall({
+    abi: fomoOEContractInterface,
+    address: fomoOEContractAddress,
+    method: "giveToJackpot",
+    args: [],
+  }) ?? [];
+  return giveToJackpot;
 }
 
 export function useJackpot() {

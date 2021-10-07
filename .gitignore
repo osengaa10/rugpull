@@ -3,3 +3,6 @@ node_modules
 .secret2
 arbitrum
 .env
+deployApp.sh
+.github
+truffle-config.js

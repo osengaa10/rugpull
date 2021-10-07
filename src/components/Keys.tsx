@@ -48,18 +48,18 @@ export default function Keys() {
     }
 
     function handlePurchaseKeys() {
-        console.log("input")
-        console.log(keyPrice)
-        // const _amount = parseInt(input);
         const _amount = BigInt(input);
-        const _keyPrice = BigInt(keyPrice)
+        const _keyPrice = BigInt(keyPrice)+BigInt(1)
+        // console.log("_keyPrice")
+        // console.log(_keyPrice)
         const totalPrice = _amount * _keyPrice
-        console.log("totalPrice")
-        console.log(totalPrice)
+        // console.log("totalPrice")
+        // console.log(totalPrice)
         const totalPriceString = totalPrice.toString()
-        console.log("totalPriceString")
-        console.log(totalPriceString)
-        console.log(ethers.utils.parseUnits(totalPriceString, "wei"))
+        // console.log("totalPriceString")
+        // console.log(totalPriceString)
+        // console.log(ethers.utils.parseUnits(totalPriceString, "wei"))
+
         if (_amount) {
             // purchaseKeys(_amount, {
             //     value: _amount*keyPrice.toNumber()

@@ -23,4 +23,4 @@
 
 
 // Hardhat Polygon Testnet (Mumbai)
-export const fomoOEContractAddress = "0x750be9f6B06240C32fBb2c26b1295629c05beB25";
+export const fomoOEContractAddress = "0xC501754d690b26718Dae2fdb6d5c617433DB3bCb";

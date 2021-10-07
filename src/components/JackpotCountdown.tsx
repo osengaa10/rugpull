@@ -57,7 +57,6 @@ export default function JackpotCountdown() {
     }
 
     if (timeLeft === undefined) {
-        console.log("TIMER IS UNDEFINED!");
         return(
             <div>
                 game not started
@@ -104,7 +103,7 @@ export default function JackpotCountdown() {
                     {winner}
                 </Text>
                 <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
-                    is winning!
+                    is pulling the rug!
                 </Text>
                 <span>
                     {/* <Countdown date={Date.now() + timeLeft*1000} /> */}

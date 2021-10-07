@@ -104,8 +104,18 @@ export default function RulesModal({ isOpen, onClose }: Props) {
                         ml="2"
                         lineHeight="1.1"
                         >
-                            Half of each key purchase goes to the jackpot, 
-                            and the other half gets divided 
+                            • 49.5% goes to the jackpot.
+                        </Text>
+                    </ListItem>
+                    <ListItem>
+                        <Text
+                        color="white"
+                        fontSize="sm"
+                        fontWeight="semibold"
+                        ml="2"
+                        lineHeight="1.1"
+                        >
+                            • 49.5% gets split 
                             amongst all key holders proportional to amount of keys held.
                         </Text>
                     </ListItem>
@@ -117,7 +127,20 @@ export default function RulesModal({ isOpen, onClose }: Props) {
                         ml="2"
                         lineHeight="1.1"
                         >
-                            Key price increases by 1% after each purchase
+                            • 1% goes to the winner or the developer (me),
+                            depending on the vote outcome.
+                        </Text>
+                    </ListItem>
+                    <ListItem>
+                        <Text
+                        color="white"
+                        fontSize="sm"
+                        fontWeight="semibold"
+                        ml="2"
+                        lineHeight="1.1"
+                        as="u"
+                        >
+                            • Key price increases after each purchase
                         </Text>
                     </ListItem>
                 </UnorderedList>
