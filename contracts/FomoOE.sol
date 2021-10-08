@@ -73,9 +73,9 @@ contract FomoOE {
         }
     }
     function purchaseKeys(uint _amount) public payable {
-        if (totalKeys == 0) {
+        if (totalKeys == 0 || keyPurchases < 5) {
             letTheGamesBegin();
-        }
+        } 
         require(getTimeLeft() > 0, "there is already a winner");
         // bool firstBuyerOfBlock;
         if (msg.value >= keyPrice*_amount) {
