@@ -78,7 +78,8 @@ import {
                           lineHeight="1.1"
                       >
                          1% is being withheld until the end of the game.
-                         Cast your vote below to decide where it goes.    
+                         Cast your vote below to decide where it goes. Voting
+                        will cost gas to increment a counter.   
                       </Text>
                   </ListItem>
                 </UnorderedList>

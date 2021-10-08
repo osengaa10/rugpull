@@ -147,12 +147,12 @@ export default function Keys() {
                     </Flex>  
                     <Box m={4}>
                         <Text color="white" fontSize="3xl">
-                            Key Balance: {userKeyBalance ? userKeyBalance.toString() : 0}
+                            Your Keys: {userKeyBalance ? userKeyBalance.toString() : 0}
                         </Text> 
                     </Box>
                     <Box m={4}>
                         <Text color="white" fontSize="3xl">
-                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(5) : 0}
+                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(5) : 0} MATIC
                         </Text>
                     </Box>
                     <Box m={4}>

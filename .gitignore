@@ -6,3 +6,4 @@ arbitrum
 deployApp.sh
 .github
 truffle-config.js
+build

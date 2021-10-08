@@ -22,5 +22,8 @@
 
 
 
+// // Hardhat Polygon Testnet (Mumbai)
+// export const fomoOEContractAddress = "0xC501754d690b26718Dae2fdb6d5c617433DB3bCb";
+
 // Hardhat Polygon Testnet (Mumbai)
-export const fomoOEContractAddress = "0xC501754d690b26718Dae2fdb6d5c617433DB3bCb";
+export const fomoOEContractAddress = "0x66a357352bcAC5Fb3153c0700f456E258cb0cB66";

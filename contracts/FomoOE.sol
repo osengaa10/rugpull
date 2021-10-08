@@ -3,6 +3,7 @@
 pragma solidity ^0.8.4;
 
 contract FomoOE {
+    uint public prevKeyPrice;
     address developer;
     uint public developerOnePercent;
     uint public giveToDeveloper;
@@ -16,6 +17,11 @@ contract FomoOE {
     // // Uncomment when testing is complete
     uint public keyPrice = 3366666666666000 wei;
     // uint public keyPrice = 0.01 ether;
+
+    struct KeyPrices {
+        uint _currentKeyPrice;
+    }
+    mapping(uint => KeyPrices) public keyPriceTracker;
 
     // // Uncomment when testing is complete
     uint public totalKeys;
@@ -48,6 +54,7 @@ contract FomoOE {
     // }
     function letTheGamesBegin() private {
         // Uncomment when testing is complete
+        keyPriceTracker[block.number]._currentKeyPrice = 3366666666666000 wei;
         totalTime = block.timestamp + 86400;
         // Uncomment when testing is complete
         // totalTime = block.timestamp + 60;
@@ -63,7 +70,8 @@ contract FomoOE {
         }
     }
     function purchaseKeys(uint _amount) public payable {
-        require(msg.value >= keyPrice*_amount, "not enough to buy the key(s).");
+        // require(msg.value >= keyPrice*_amount, "not enough to buy the key(s).");
+
         if (totalKeys == 0) {
             letTheGamesBegin();
         }

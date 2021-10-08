@@ -74,8 +74,7 @@ import {
                           lineHeight="1.1"
                       >
                           • There is always a risk when interacting with any smart contract.
-                          So seriously, don't ape into this wallstreetbets style. I also don't want 
-                          to talk you out of a potentially lucrative opportunity. It's your money so do
+                          So seriously, don't ape into this wallstreetbets style. Also it's your money so do
                           whatever you want. 
                       </Text>
                   </ListItem>
@@ -90,7 +89,7 @@ import {
                       >
                           • I can't really expect anyone to believe this, but this is a fair and honest game.
                           There's no predetermined winner, hidden backdoors, pyramid-like referral scheme, or any
-                          other flimflam. Automatically giving myself 1% felt sleezy, so I put it up to a vote instead.
+                          other flimflam.
                       </Text>
                   </ListItem>
                 </UnorderedList>
@@ -220,7 +219,7 @@ import {
                           lineHeight="1.1"
                           >
                               • Try having multiple accounts going for the jackpot. Don't worry, you can claim your
-                              dividends after the game ends too. 
+                              dividends after the game ends. 
                           </Text>
                       </ListItem>
                   </UnorderedList>

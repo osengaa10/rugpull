@@ -59,7 +59,7 @@ export default function JackpotCountdown() {
     if (timeLeft === undefined) {
         return(
             <div>
-                game not started
+                Connect Wallet to Polygon Network
             </div>   
         )
     } else if (timeLeft.toNumber() <= 0 && userWhoWon === '0x0000000000000000000000000000000000000000') {
@@ -99,7 +99,7 @@ export default function JackpotCountdown() {
         console.log("HH:MM:SS REMAINING:" , new Date(timeLeft.toNumber() * 1000).toISOString().substr(11, 8))
         return (
             <Flex direction="column" align="center" mt="4">
-                <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
+                <Text color="white" as="cite" fontSize={{ base: "15px", md: "32px", lg: "40px" }}>
                     {winner}
                 </Text>
                 <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>

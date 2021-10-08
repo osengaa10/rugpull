@@ -25,7 +25,7 @@ export default function NotesButton({ handleOpenNotesModal }: Props) {
         borderColor: "blue.700",
       }}
     >
-      Notes
+      Misc.
     </Button>
   );
 }

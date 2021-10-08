@@ -115,8 +115,7 @@ export default function RulesModal({ isOpen, onClose }: Props) {
                         ml="2"
                         lineHeight="1.1"
                         >
-                            • 49.5% gets split 
-                            amongst all key holders proportional to amount of keys held.
+                            • 49.5% pays out as dividends proportional to amount of keys held.
                         </Text>
                     </ListItem>
                     <ListItem>
