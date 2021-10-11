@@ -108,7 +108,7 @@ import {
             >
               <Flex justifyContent="space-between" alignItems="center" mb={3}>
                 <Text color="gray.400" fontSize="sm">
-                  Strategy:
+                  Strategy and Fairplay:
                 </Text>
               </Flex>
               <Flex alignItems="center" mt={2} mb={4} lineHeight={1}>
@@ -150,7 +150,7 @@ import {
                                             mt="3"
                                             lineHeight="1.1"
                                         >
-                                            • Have ample gas price/limit to ensure you get you transaction included in the block.
+                                            • Have ample gas price/limit to ensure you get your transaction included in the block.
                                         </Text>
                                     </ListItem>
                                 </UnorderedList>
@@ -206,8 +206,8 @@ import {
                           ml="2"
                           lineHeight="1.1"
                           >
-                              • Not sure why anyone would, but you can over pay for a key.
-                              Funds will be allocated per the rules.  
+                              • If multiple transactions are included in the game ending block, the winner will
+                              be the address that got their transaction included first.
                           </Text>
                       </ListItem>
                       <ListItem>
@@ -220,6 +220,18 @@ import {
                           >
                               • Try having multiple accounts going for the jackpot. Don't worry, you can claim your
                               dividends after the game ends. 
+                          </Text>
+                      </ListItem>
+                      <ListItem>
+                          <Text
+                          color="white"
+                          fontSize="sm"
+                          fontWeight="semibold"
+                          ml="2"
+                          lineHeight="1.1"
+                          >
+                              • Even though page refreshing happens automatically, you can refresh manually
+                              to sync the timer and key price.
                           </Text>
                       </ListItem>
                   </UnorderedList>

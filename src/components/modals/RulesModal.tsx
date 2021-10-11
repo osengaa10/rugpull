@@ -27,7 +27,7 @@ export default function RulesModal({ isOpen, onClose }: Props) {
 //   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
       <ModalOverlay />
       <ModalContent
         background="gray.900"

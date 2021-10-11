@@ -66,7 +66,7 @@ export default function JackpotCountdown() {
         console.log("TIMER IS AT ZERO!", timeLeft.toNumber());
         return (
             <Flex direction="column" align="center" mt="4">
-                <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
+                <Text color="white" fontSize={{ base: "15px", md: "32px", lg: "40px" }}>
                     {winner}
                 </Text>
                 <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
@@ -77,7 +77,7 @@ export default function JackpotCountdown() {
     } else if (timeLeft.toNumber() <= 0 && userWhoWon !== '0x0000000000000000000000000000000000000000') {
         return (
             <Flex direction="column" align="center" mt="4">
-                <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
+                <Text color="white" fontSize={{ base: "15px", md: "32px", lg: "40px" }}>
                     {winner}
                 </Text>
                 <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
@@ -90,7 +90,7 @@ export default function JackpotCountdown() {
                         onClick={payWinner}>
                             Claim Prize!
                     </Button>
-                    <Text fontSize="16px">This button sends the eth the {winner}'s address.</Text>
+                    <Text fontSize="15px">This button sends the eth the {winner}'s address.</Text>
                 </Box>  
             </Flex>
         )

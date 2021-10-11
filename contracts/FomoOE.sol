@@ -10,23 +10,15 @@ contract FomoOE {
     uint public startTime;
     uint public totalTime;
     uint public timeLeft;
+
     address winning;
     uint public balanceReceived;
-    uint public blockNumberOfLastKeyPurchase = block.number;
-    // uint public keyPrice = 100 wei;
-    // // Uncomment when testing is complete
     uint public keyPrice = 3366666666666000 wei;
-    uint public prevKeyPrice = 3366666666666000 wei;
-    uint public nextKeyPrice;
-    uint[2] keyPrices;
-    // uint public keyPrice = 0.01 ether;
+    uint public increased_order = 3366666666666000;
+    uint public keyPriceIncreaseBlockNumber;
+    uint public multiplier = 100;
 
-    struct KeyPrices {
-        uint _currentKeyPrice;
-    }
-    mapping(uint => KeyPrices) public keyPriceTracker;
 
-    // // Uncomment when testing is complete
     uint public totalKeys;
     uint public keyPurchases;
     uint public divPool;
@@ -50,17 +42,22 @@ contract FomoOE {
     constructor() {
         developer = msg.sender;
     }
+
+    modifier isHuman() {
+        address _addr = msg.sender;
+        uint256 _codeLength;
+        
+        assembly {_codeLength := extcodesize(_addr)}
+        require(_codeLength == 0, "sorry humans only");
+        _;
+    }
     // function restartGame() public {
     //     require(getTimeLeft() == 0, "game is still in play");
     //     require(msg.sender == winning, "you are not the winner");
     //     letTheGamesBegin();
     // }
     function letTheGamesBegin() private {
-        // Uncomment when testing is complete
-        // keyPriceTracker[block.number]._currentKeyPrice = 3366666666666000 wei;
         totalTime = block.timestamp + 86400;
-        // Uncomment when testing is complete
-        // totalTime = block.timestamp + 60;
     }
     function getTimeLeft() public view returns(uint) {
         if (totalKeys == 0) {
@@ -72,26 +69,30 @@ contract FomoOE {
             return 0;
         }
     }
-    function purchaseKeys(uint _amount) public payable {
+    function purchaseKeys(uint _amount) public payable isHuman() {
         if (totalKeys == 0 || keyPurchases < 5) {
             letTheGamesBegin();
         } 
         require(getTimeLeft() > 0, "there is already a winner");
-        // bool firstBuyerOfBlock;
         if (msg.value >= keyPrice*_amount) {
-            if (keyPurchases < 500) {
-                uint numerator = keyPrice*100;
-                keyPrice = keyPrice + numerator/10000;
-            } else {
-                uint numerator = keyPrice*50;
-                keyPrice = keyPrice + numerator/10000;
-            }
-            // firstBuyerOfBlock = true;
+            keyPriceIncreaseBlockNumber = block.number;
+            uint numerator = keyPrice*multiplier;
+            keyPrice = keyPrice + numerator/10000;
+                if (keyPrice/increased_order >= 10 && multiplier >= 20) {
+                    increased_order = keyPrice;
+                    multiplier = multiplier - 10;
+                }
+            // if (keyPurchases < 500) {
+            //     uint numerator = keyPrice*100;
+            //     keyPrice = keyPrice + numerator/10000;
+            // } else {
+            //     uint numerator = keyPrice*50;
+            //     keyPrice = keyPrice + numerator/10000;
+            // }
         } else {
-            // firstBuyerOfBlock = false;
-            uint numerator = keyPrice*100;
+            uint numerator = keyPrice*multiplier;
             uint tempKeyPrice = keyPrice - numerator/10000;
-            require(msg.value >= tempKeyPrice*_amount, "Not enough to buy the key(s).");
+            require(msg.value >= tempKeyPrice*_amount && block.number <= keyPriceIncreaseBlockNumber+1, "Not enough to buy the key(s): Key price is increasing quickly. Try refreshing the page and quickly submitting key purchase again.");
         }
 
         uint devShareNumerator = msg.value*100;
@@ -105,7 +106,6 @@ contract FomoOE {
         divTracker[msg.sender]._boughtKeys = true;
         totalKeys += _amount;
         if (_amount*30 > 86400 - (totalTime-block.timestamp)) {
-            // totalTime = 86400 + block.timestamp;
             letTheGamesBegin();
         } else {
             totalTime += _amount*30;
@@ -114,7 +114,6 @@ contract FomoOE {
         keyPurchases += 1;
         winning = msg.sender;
         emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot, winning);
-        blockNumberOfLastKeyPurchase = block.number;   
     } 
     // function purchaseKeys(uint _amount) public payable {
     //     // require(msg.value >= keyPrice*_amount, "not enough to buy the key(s).");
@@ -184,7 +183,7 @@ contract FomoOE {
         return tempUserWithdrawAmount;
     }
     
-    function withdrawDivvies() public {
+    function withdrawDivvies() public isHuman() {
         address payable to = payable(msg.sender);
         uint tempUserWithdrawAmount;
         uint tempNumerator;
@@ -203,7 +202,7 @@ contract FomoOE {
         to.transfer(tempUserWithdrawAmount);
     }
 
-    function jackpotPayout() public {
+    function jackpotPayout() public isHuman() {
         require(getTimeLeft() == 0, "game is still in play");
         require(jackpot > 0, "No money in jackpot");
         require(msg.sender == winning, "you are not the winner");
@@ -233,7 +232,7 @@ contract FomoOE {
         developerOnePercent = 0;
     }
 
-    function voteForOnePercent(bool _vote) public {
+    function voteForOnePercent(bool _vote) public isHuman() {
         require(divTracker[msg.sender]._boughtKeys == true, "you need to buy at least one key to vote.");
         require(divTracker[msg.sender]._voted == false, "you already voted.");
         divTracker[msg.sender]._voted = true;
