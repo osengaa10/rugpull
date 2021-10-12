@@ -15,7 +15,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
     activateBrowserWallet();
   }
 
-  return account && chainId == 80001 ? (
+  return account && chainId === 80001 ? (
     <Box
       display="flex"
       alignItems="center"

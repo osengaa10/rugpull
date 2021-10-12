@@ -3,6 +3,7 @@ import { Contract } from "@ethersproject/contracts";
 //UNCOMMENT WHEN ISSUE IS PATCHED
 //================================
 import { useContractCall, useContractFunction } from "@usedapp/core";
+// import { useContractFunctionEvents } from "./workaround";
 //================================
 
 import fomoOEContractAbi from "../contracts/artifacts/contracts/FomoOE.sol/FomoOE.json";
@@ -12,10 +13,7 @@ import { useEthers } from "@usedapp/core";
 
 declare const window: any;
 
-// const provider = new ethers.providers.Web3Provider(window.ethereum);
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-// console.log("provider:")
-// console.log(provider)
+export const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi);
 // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
@@ -23,15 +21,6 @@ const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi
 export const contract = new Contract(fomoOEContractAddress, fomoOEContractInterface, provider);
 //================================
 
-
-// declare const account: any;
-// export function useGetAccount() {
-//   const { activateBrowserWallet, account } = useEthers();
-//   activateBrowserWallet();
-//   console.log("{ activateBrowserWallet, account }");
-//   console.log(account);
-//   return account
-// }
 
 // Access the auto-generated getter function created by solidity for a variable.
 export function useKeyPrice() {
@@ -171,3 +160,10 @@ export function useContractMethod(methodName: string) {
   return { state, send };
 }
 //================================
+
+// export function useContractMethodEvents(methodName: string) {
+//   const { state, send, events } = useContractFunctionEvents(contract, methodName, 80001, {});
+//   // console.log("{state, send, events}: hook");
+//   // console.log({state, send, events});
+//   return { state, send, events };
+// }

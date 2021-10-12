@@ -39,14 +39,3 @@ module.exports = {
     artifacts: "./src/contracts/artifacts"
   }
 }
-
-
-// module.exports = {
-//   solidity: '0.8.4',
-//   networks: {
-//     arbitrum: {
-//       url: 'https://rinkeby.arbitrum.io/rpc',
-//       gasPrice: 0,
-//     },
-//   },
-// }

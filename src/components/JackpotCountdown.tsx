@@ -31,9 +31,6 @@ export default function JackpotCountdown() {
     const [userWhoWon, setUserWhoWon] = useState(String(whoWon));
     const [startTime, setStartTime] = useState(Date.now())
 
-    // console.log("totalTime:")
-    // console.log(totalTime);
-    // <Countdown date={Date.now() + timeLeft*1000} />
 
     useEffect(() => {
         setTimeLeftState(timeLeft ? timeLeft.toNumber(): -1)
@@ -95,7 +92,6 @@ export default function JackpotCountdown() {
             </Flex>
         )
     } else {
-        // console.log("SECONDS REMAINING: ", timeLeft.toNumber());
         console.log("HH:MM:SS REMAINING:" , new Date(timeLeft.toNumber() * 1000).toISOString().substr(11, 8))
         return (
             <Flex direction="column" align="center" mt="4">
@@ -106,9 +102,7 @@ export default function JackpotCountdown() {
                     is pulling the rug!
                 </Text>
                 <span>
-                    {/* <Countdown date={Date.now() + timeLeft*1000} /> */}
                     <Countdown date={startTime + timeLeft*1000} />
-
                 </span>
             </Flex>
         )

@@ -2,6 +2,9 @@
 
 pragma solidity ^0.8.4;
 
+/**
+ * @title A rugpull opportunity for anyone
+*/
 contract FomoOE {
     address developer;
     uint public developerOnePercent;
@@ -31,22 +34,27 @@ contract FomoOE {
         bool _voted;
         bool _boughtKeys;
     }
-
     mapping(address => Divvies) public divTracker;
-    event keysPurchased(uint _userKeyBalance, uint _totalKeys, uint _keyPrice, uint _divPool, uint _jackpot, address _winning);
+
+    event keysPurchased(uint _amount, address _winning);
     event userDivvies(uint _userDivvies);
     event contractBalance(uint _balanceReceived);
     event currentKeyPrice(uint keyPrice);
     
-
+    
     constructor() {
-        developer = msg.sender;
+    /**
+     * @notice developer address is used to withdraw 1% depending on the outcome
+     * of the vote. developer address has NO more privileges than any other address.  
+     */
+    developer = msg.sender;
     }
-
+    /**
+     * @dev Only humans can play. No smart contracts can play. 
+     */
     modifier isHuman() {
         address _addr = msg.sender;
         uint256 _codeLength;
-        
         assembly {_codeLength := extcodesize(_addr)}
         require(_codeLength == 0, "sorry humans only");
         _;
@@ -56,9 +64,18 @@ contract FomoOE {
     //     require(msg.sender == winning, "you are not the winner");
     //     letTheGamesBegin();
     // }
+
+    /**
+     * @dev put 24 (or 86,400 seconds) hours on the clock to start the game
+     */
     function letTheGamesBegin() private {
         totalTime = block.timestamp + 86400;
     }
+
+    /**
+     * @notice source of truth for the time keeping. 
+     * Query this function to get the amount of seconds remaining in the game
+     */
     function getTimeLeft() public view returns(uint) {
         if (totalKeys == 0) {
             return 86400;
@@ -69,32 +86,43 @@ contract FomoOE {
             return 0;
         }
     }
+    /**
+     * @dev holds a logic for key price increase, adding time per key,
+     * updating player's key balance, allocating funds, and setting the current winning player.
+     * @notice If multiple key purchases are made a the end of the game, 
+     * the winner will be the address who gets included FIRST in the game ending block.
+    */
     function purchaseKeys(uint _amount) public payable isHuman() {
+        /// @notice Incase the game has a slow start (no players), the first 5 key purchases set the clock to 24 hours 
         if (totalKeys == 0 || keyPurchases < 5) {
             letTheGamesBegin();
         } 
         require(getTimeLeft() > 0, "there is already a winner");
+        /** 
+         * @dev Key price can only increase once per block. Without this if/else
+         * statement, there could only be one key purchase per block.
+        */
         if (msg.value >= keyPrice*_amount) {
             keyPriceIncreaseBlockNumber = block.number;
+            /**
+             * @notice Starting at 1% price hike per purchase, if next price increase adds a digit
+             * then price hike slows by 0.1%. This tapering until the minimum 0.2% price increase is reached. 
+             * This game should end well before reaching 0.2% increases. 
+             * If it doesn't, you people took this way too seriously 
+             * EXAMPLE: KeyPrice=10 results in 1% increases each time keys are bought. 
+             * When KeyPrice=100, price will increase by 0.9%. When KeyPrice=1000, price increases by 0.8% and so on..
+            */
             uint numerator = keyPrice*multiplier;
             keyPrice = keyPrice + numerator/10000;
                 if (keyPrice/increased_order >= 10 && multiplier >= 20) {
                     increased_order = keyPrice;
                     multiplier = multiplier - 10;
                 }
-            // if (keyPurchases < 500) {
-            //     uint numerator = keyPrice*100;
-            //     keyPrice = keyPrice + numerator/10000;
-            // } else {
-            //     uint numerator = keyPrice*50;
-            //     keyPrice = keyPrice + numerator/10000;
-            // }
         } else {
             uint numerator = keyPrice*multiplier;
             uint tempKeyPrice = keyPrice - numerator/10000;
-            require(msg.value >= tempKeyPrice*_amount && block.number <= keyPriceIncreaseBlockNumber+1, "Not enough to buy the key(s): Key price is increasing quickly. Try refreshing the page and quickly submitting key purchase again.");
+            require(msg.value >= tempKeyPrice*_amount && block.number <= keyPriceIncreaseBlockNumber+2, "Not enough to buy the key(s): Key price is increasing quickly. Try refreshing the page and quickly submitting key purchase again.");
         }
-
         uint devShareNumerator = msg.value*100;
         uint devShare = devShareNumerator/10000;
         uint gameShare = msg.value - devShare;
@@ -113,70 +141,23 @@ contract FomoOE {
 
         keyPurchases += 1;
         winning = msg.sender;
-        emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot, winning);
+        emit keysPurchased(_amount, winning);
     } 
-    // function purchaseKeys(uint _amount) public payable {
-    //     // require(msg.value >= keyPrice*_amount, "not enough to buy the key(s).");
-    //     if (totalKeys == 0) {
-    //         letTheGamesBegin();
-    //     }
-    //     require(getTimeLeft() > 0, "there is already a winner");
-
-    //     // if (block.number <= blockNumberOfLastKeyPurchase) {
-    //     //     prevKeyPrice = keyPrice;
-    //     //     require(msg.value >= prevKeyPrice, "In the same block as another player, but you need to pay more.");
-    //     // } else {
-    //     //     uint numerator = keyPrice*100;
-    //     //     keyPrice = keyPrice + numerator/10000;
-    //     //     require(msg.value >= keyPrice, "In a later block, but you need to pay more.");
-    //     // }
-    //     keyPrices[0] = keyPrice;
-    //     require(msg.value >= keyPrices[0]*_amount, "Not enough to buy the key(s).");
-    //     uint devShareNumerator = msg.value*100;
-    //     uint devShare = devShareNumerator/10000;
-    //     uint gameShare = msg.value - devShare;
-    //     uint floor = gameShare/2;
-    //     developerOnePercent += devShare;
-    //     jackpot += floor;
-    //     divPool += gameShare - floor; 
-    //     divTracker[msg.sender]._keyBalance += _amount;
-    //     divTracker[msg.sender]._boughtKeys = true;
-    //     totalKeys += _amount;
-    //     if (_amount*30 > 86400 - (totalTime-block.timestamp)) {
-    //         // totalTime = 86400 + block.timestamp;
-    //         letTheGamesBegin();
-    //     } else {
-    //         totalTime += _amount*30;
-    //     }
-        
-    //     if (keyPurchases < 500) {
-    //         uint numerator = keyPrice*100;
-    //         keyPrices[1] = keyPrice + numerator/10000;
-    //     } else {
-    //         uint numerator = keyPrice*50;
-    //         keyPrices[1] = keyPrice + numerator/10000;
-    //     }
-
-    //     keyPurchases += 1;
-    //     winning = msg.sender;
-    //     emit keysPurchased(divTracker[msg.sender]._keyBalance, totalKeys, keyPrice, divPool, jackpot, winning);
-    //     blockNumberOfLastKeyPurchase = block.number;   
-    // } 
-
+    /**
+     * @dev return which address is currently winning.
+    */
     function getWinner() public view returns(address) {
         return winning;
     }
-    
+    /**
+     * @dev Tracks each player's dividends.
+    */
     function updateDivvies(address _userAddress) public view returns(uint) {
         uint tempUserWithdrawAmount;
         uint tempNumerator;
         if (totalKeys == 0 ) {
             tempUserWithdrawAmount = 0;
         } else {
-            // example to reference, but solidity can't do decimals
-            // // tempUserKeyProportion = divTracker[_userAddress]._keyBalance/totalKeys;
-            // // tempUserWithdrawAmount = tempUserKeyProportion*divPool - divTracker[_userAddress]._withdrawnAmount;
-
             tempNumerator = divTracker[_userAddress]._keyBalance * divPool;
             tempUserWithdrawAmount = tempNumerator/totalKeys - divTracker[_userAddress]._withdrawnAmount;  
         }  
@@ -190,10 +171,6 @@ contract FomoOE {
         if (totalKeys == 0 ) {
             tempUserWithdrawAmount = 0;
         } else {
-            // example to reference, but solidity can't do decimals
-            // // tempUserKeyProportion = divTracker[_userAddress]._keyBalance/totalKeys;
-            // // tempUserWithdrawAmount = tempUserKeyProportion*divPool - divTracker[_userAddress]._withdrawnAmount;
-
             tempNumerator = divTracker[msg.sender]._keyBalance * divPool;
             tempUserWithdrawAmount = tempNumerator/totalKeys - divTracker[msg.sender]._withdrawnAmount;
             divTracker[msg.sender]._withdrawnAmount += tempUserWithdrawAmount;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatEther } from "@ethersproject/units";
 import { ethers } from 'ethers';
 import JackpotCountdown from "./JackpotCountdown";
@@ -13,7 +13,8 @@ import {
     Wrap,
     WrapItem,
     Tooltip,
-    Spacer
+    Spacer,
+    useToast
 } from "@chakra-ui/react";
 // import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { InfoOutlineIcon } from '@chakra-ui/icons'
@@ -23,8 +24,11 @@ import {
     useContractMethod,
     useGetUserKeyBalance,
     useGetUserDivBalance,
-    useTotalKeys
+    useTotalKeys,
+    contract,
+    provider
 } from "../hooks";
+import { send } from "process";
 
 
 // const breakpoints = createBreakpoints({
@@ -44,6 +48,35 @@ export default function Keys() {
     const { send: purchaseKeys } = useContractMethod("purchaseKeys");
     const { send: withdrawDivvies } = useContractMethod("withdrawDivvies");
     const [input, setInput] = useState("");
+    const [toastPlayer, setToastPlayer] = useState("");
+    const [toastMessage, setToastMessage] = useState("");
+    const toast = useToast();
+    
+    contract.once('keysPurchased', (_amount, _winning) => {
+        // console.log("_amount: ", _amount.toString());
+        // let toastPlayer = String(_winning);
+        setToastPlayer(String(_winning));
+        // let toastMessage = _amount.toString();
+        setToastMessage(_amount.toString());
+        //
+    });
+
+    useEffect(() => {
+        if (toastMessage != "") {
+            // console.log("toastMessage: ", toastMessage);
+            // console.log("toastPlayer: ", toastPlayer)
+            toast({
+                position: "top-right",
+                title: toastPlayer,
+                description: "bought " + toastMessage + " keys!",
+                status: 'success',
+                duration: 9000,
+                isClosable: true
+            });
+        }
+            
+    }, [toastMessage, toastPlayer])
+
 
     function handleWithdrawDivvies() {
         withdrawDivvies();
@@ -63,9 +96,6 @@ export default function Keys() {
         // console.log(ethers.utils.parseUnits(totalPriceString, "wei"))
 
         if (_amount) {
-            // purchaseKeys(_amount, {
-            //     value: _amount*keyPrice.toNumber()
-            // });
             purchaseKeys(_amount, {
                 value: ethers.utils.parseUnits(totalPriceString, "wei")
             });
@@ -73,8 +103,6 @@ export default function Keys() {
     }
 
     function handleInput(valueAsString: string) {
-        // console.log("valueAsString")
-        // console.log(valueAsString)
         if (valueAsString.includes(".")) {
             alert("Please input whole number")
             setInput("")
@@ -85,7 +113,7 @@ export default function Keys() {
     }
 
     return (
-    <Flex direction="column" align="center" mt="4">
+    <Flex direction="column" align="center" mt="4" >
         <Box>
             <Text component={'span'} color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
                 {/* <Countdown date={Date.now() + 10000} /> */}
@@ -94,7 +122,7 @@ export default function Keys() {
         </Box>
         <Box>
             <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
-                Jackpot value: {jackpot ? parseFloat(formatEther(jackpot.toString())).toFixed(3) : 0} MATIC
+                Jackpot: {jackpot ? parseFloat(formatEther(jackpot.toString())).toFixed(3) : 0} MATIC
             </Text>
         </Box>
         <Divider orientation="horizontal" />

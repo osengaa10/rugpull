@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { usePromiseTransaction } from '@usedapp/core/dist/esm/src/hooks/usePromiseTransaction';
 import { Contract } from '@ethersproject/contracts';
 
-export const useContractFunction = (
+export const useContractFunctionEvents = (
   contract: Contract,
   functionName: string,
   chainId: number | undefined,
@@ -36,7 +36,6 @@ export const useContractFunction = (
     },
     [contract, functionName, options]
   )
-
   return { send, state, events }
 }
 
