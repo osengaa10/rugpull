@@ -60,6 +60,8 @@ export default function Keys() {
         setToastMessage(_amount.toString());
         //
     });
+    // console.log("listeners:")
+    // console.log(contract.listenerCount('keysPurchased' ))
 
     useEffect(() => {
         if (toastMessage != "") {
@@ -74,7 +76,7 @@ export default function Keys() {
                 isClosable: true
             });
         }
-            
+        contract.removeAllListeners('keysPurchased' )   
     }, [toastMessage, toastPlayer])
 
 
