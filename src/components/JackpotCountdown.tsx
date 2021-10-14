@@ -44,23 +44,26 @@ export default function JackpotCountdown() {
 
     function payWinner() {
         if (totalTime.toNumber()*1000 <= Date.now()) {
-            console.log("WINNER!!!!!!");
-            console.log(totalTime);
             jackpotPayout();
         } else {
-            console.log("game is still in play");
-            console.log(totalTime);
         }
     }
 
     if (timeLeft === undefined) {
         return(
-            <div>
-                Connect Wallet to Polygon Network
-            </div>   
+            
+        <Flex direction="column" align="center" mt="4">
+            <Text color="white" as="cite" fontSize={{ base: "15px", md: "32px", lg: "40px" }}>
+                Connect to wallet to Polygon network and
+            </Text>
+            <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
+                see who is pulling the rug! {winner}
+            </Text>
+            
+        </Flex>
         )
     } else if (timeLeft.toNumber() <= 0 && userWhoWon === '0x0000000000000000000000000000000000000000') {
-        console.log("TIMER IS AT ZERO!", timeLeft.toNumber());
+        // console.log("TIMER IS AT ZERO!", timeLeft.toNumber());
         return (
             <Flex direction="column" align="center" mt="4">
                 <Text color="white" fontSize={{ base: "15px", md: "32px", lg: "40px" }}>

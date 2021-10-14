@@ -11,9 +11,11 @@ import fomoOEContractAbi from "../contracts/artifacts/contracts/FomoOE.sol/FomoO
 import { fomoOEContractAddress } from "../contracts";
 import { useEthers } from "@usedapp/core";
 
+
 declare const window: any;
 
 export const provider = new ethers.providers.Web3Provider(window.ethereum);
+
 
 const fomoOEContractInterface = new ethers.utils.Interface(fomoOEContractAbi.abi);
 // UNCOMMENT WHEN ISSUE IS PATCHED (maybe not needed?)
@@ -81,8 +83,6 @@ export function useGetUserKeyBalance() {
     method: "divTracker",
     args: [account],
   }) ?? [];
-  // console.log("divTracker");
-  // console.log(divTracker);
   return divTracker[0];
 }
   
@@ -94,8 +94,6 @@ export function useGetUserDivBalance() {
     method: "updateDivvies",
     args: [account],
   }) ?? [];
-  // console.log("userDivvies:");
-  // console.log(userDivvies);
   return userDivvies;
 }
 

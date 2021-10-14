@@ -16,7 +16,6 @@ import {
     Spacer,
     useToast
 } from "@chakra-ui/react";
-// import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { InfoOutlineIcon } from '@chakra-ui/icons'
 import { 
     useKeyPrice, 
@@ -25,19 +24,9 @@ import {
     useGetUserKeyBalance,
     useGetUserDivBalance,
     useTotalKeys,
-    contract,
-    provider
+    contract
 } from "../hooks";
-import { send } from "process";
 
-
-// const breakpoints = createBreakpoints({
-//   sm: "30em",
-//   md: "48em",
-//   lg: "62em",
-//   xl: "80em",
-//   "2xl": "96em",
-// })
 
 export default function Keys() {
     const keyPrice = useKeyPrice();
@@ -52,19 +41,17 @@ export default function Keys() {
     const [toastMessage, setToastMessage] = useState("");
     const toast = useToast();
     
-    contract.once('keysPurchased', (_amount, _winning) => {
-        // console.log("_amount: ", _amount.toString());
-        // let toastPlayer = String(_winning);
+
+    contract.on('keysPurchased', (_amount, _winning) => {
         setToastPlayer(String(_winning));
-        // let toastMessage = _amount.toString();
         setToastMessage(_amount.toString());
-        //
     });
-    // console.log("listeners:")
-    // console.log(contract.listenerCount('keysPurchased' ))
+    if (contract.listenerCount('keysPurchased' ) > 4) {
+        contract.removeAllListeners('keysPurchased' ) 
+    }
 
     useEffect(() => {
-        if (toastMessage != "") {
+        if (toastMessage !== "") {
             // console.log("toastMessage: ", toastMessage);
             // console.log("toastPlayer: ", toastPlayer)
             toast({
@@ -76,7 +63,7 @@ export default function Keys() {
                 isClosable: true
             });
         }
-        contract.removeAllListeners('keysPurchased' )   
+        // contract.removeAllListeners('keysPurchased' )   
     }, [toastMessage, toastPlayer])
 
 
@@ -87,16 +74,8 @@ export default function Keys() {
     function handlePurchaseKeys() {
         const _amount = BigInt(input);
         const _keyPrice = BigInt(keyPrice)+BigInt(1)
-        // console.log("_keyPrice")
-        // console.log(_keyPrice)
         const totalPrice = _amount * _keyPrice
-        // console.log("totalPrice")
-        // console.log(totalPrice)
         const totalPriceString = totalPrice.toString()
-        // console.log("totalPriceString")
-        // console.log(totalPriceString)
-        // console.log(ethers.utils.parseUnits(totalPriceString, "wei"))
-
         if (_amount) {
             purchaseKeys(_amount, {
                 value: ethers.utils.parseUnits(totalPriceString, "wei")
