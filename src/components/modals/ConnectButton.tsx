@@ -1,11 +1,12 @@
 import { Button, Box, Text } from "@chakra-ui/react";
-import { useEthers, useEtherBalance } from "@usedapp/core";
+import { useEthers, useEtherBalance, ChainId } from "@usedapp/core";
 import { formatEther } from "@ethersproject/units";
 import Identicon from "../Identicon";
 
 type Props = {
   handleOpenModal: any;
 };
+declare const window: any;
 
 export default function ConnectButton({ handleOpenModal }: Props) {
   const { activateBrowserWallet, account, chainId } = useEthers();
@@ -13,8 +14,43 @@ export default function ConnectButton({ handleOpenModal }: Props) {
 
   function handleConnectWallet() {
     activateBrowserWallet();
+    switchNetworkMumbai();
   }
 
+  const switchNetworkMumbai = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x13881" }],
+      });
+    } catch (error) {
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x13881",
+                chainName: "Mumbai",
+                rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+                nativeCurrency: {
+                  name: "Matic",
+                  symbol: "Matic",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+              },
+            ],
+          });
+        } catch (addError) {
+          alert(addError);
+        }
+      }
+    }
+  }
+
+
+  
   return account && chainId === 80001 ? (
     <Box
       display="flex"
