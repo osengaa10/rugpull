@@ -185,6 +185,9 @@ export default function Keys() {
         <Text color="white" fontSize={{ base: "14px", md: "24px", lg: "24px" }}>
             <a href="https://morning-thunder-5650.on.fleek.co/">Rugpull Frontend 2</a>
         </Text>
+        <Text color="white" fontSize={{ base: "14px", md: "24px", lg: "24px" }}>
+            <a href="https://discord.gg/FXTxJqvnnJ">Discord</a>
+        </Text>
     </Flex>
     
     );

@@ -178,6 +178,39 @@ export default function RulesModal({ isOpen, onClose }: Props) {
             </Flex>
            
           </Box>
+          <Box
+            borderRadius="3xl"
+            border="1px"
+            borderStyle="solid"
+            borderColor="gray.600"
+            px={5}
+            pt={4}
+            pb={2}
+            mb={3}
+          >
+            <Flex justifyContent="space-between" alignItems="center" mb={3}>
+              <Text color="gray.400" fontSize="sm">
+                TIPS:
+              </Text>
+            </Flex>
+            <Flex alignItems="center" mt={2} mb={4} lineHeight={1}>
+                <UnorderedList spacing={3}>
+                    <ListItem>
+                        <Text
+                            color="white"
+                            fontSize="sm"
+                            fontWeight="semibold"
+                            ml="2"
+                            lineHeight="1.1"
+                        >
+                            • If a key purchase fails, it is likely because the key price is increasing quickly.
+                            Resfresh the page and try again.
+                        </Text>
+                    </ListItem>
+                </UnorderedList>
+            </Flex>
+           
+          </Box>
         </ModalBody>
 
         <ModalFooter
