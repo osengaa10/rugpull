@@ -17,43 +17,11 @@ export default function ConnectButton({ handleOpenModal }: Props) {
     switchNetworkMumbai();
   }
 
-  const switchNetworkMumbai = async () => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x13881" }],
-      });
-    } catch (error) {
-      if (error.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x13881",
-                chainName: "Mumbai",
-                rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-                nativeCurrency: {
-                  name: "Matic",
-                  symbol: "Matic",
-                  decimals: 18,
-                },
-                blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-              },
-            ],
-          });
-        } catch (addError) {
-          alert(addError);
-        }
-      }
-    }
-  }
-
   // const switchNetworkMumbai = async () => {
   //   try {
   //     await window.ethereum.request({
   //       method: "wallet_switchEthereumChain",
-  //       params: [{ chainId: "0x89" }],
+  //       params: [{ chainId: "0x13881" }],
   //     });
   //   } catch (error) {
   //     if (error.code === 4902) {
@@ -62,15 +30,15 @@ export default function ConnectButton({ handleOpenModal }: Props) {
   //           method: "wallet_addEthereumChain",
   //           params: [
   //             {
-  //               chainId: "0x89",
-  //               chainName: "Polygon",
-  //               rpcUrls: ["https://polygon-rpc.com"],
+  //               chainId: "0x13881",
+  //               chainName: "Mumbai",
+  //               rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
   //               nativeCurrency: {
   //                 name: "Matic",
   //                 symbol: "Matic",
   //                 decimals: 18,
   //               },
-  //               blockExplorerUrls: ["https://polygonscan.com"],
+  //               blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
   //             },
   //           ],
   //         });
@@ -81,9 +49,41 @@ export default function ConnectButton({ handleOpenModal }: Props) {
   //   }
   // }
 
+  const switchNetworkMumbai = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x89" }],
+      });
+    } catch (error) {
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x89",
+                chainName: "Polygon",
+                rpcUrls: ["https://polygon-rpc.com"],
+                nativeCurrency: {
+                  name: "Matic",
+                  symbol: "Matic",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://polygonscan.com"],
+              },
+            ],
+          });
+        } catch (addError) {
+          alert(addError);
+        }
+      }
+    }
+  }
+
 
   
-  return account && chainId === 80001 ? (
+  return account && chainId === 137 ? (
     <Box
       display="flex"
       alignItems="center"
