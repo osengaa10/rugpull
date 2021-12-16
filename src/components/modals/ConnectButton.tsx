@@ -83,7 +83,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
 
 
   
-  return account && chainId === 10 ? (
+  return account && Number(chainId) === 10 ? (
     <Box
       display="flex"
       alignItems="center"
