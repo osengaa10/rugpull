@@ -22,6 +22,10 @@ module.exports = {
       url: `https://arbitrum-rinkeby.infura.io/v3/${projectId}`,
       accounts: [privateKey]
     },
+    optimism: {
+      url: `https://optimism-mainnet.infura.io/v3/${projectId}`,
+      accounts: [privateKey]
+    },
   },
   solidity: {
     version: "0.8.4",

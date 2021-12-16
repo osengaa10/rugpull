@@ -103,7 +103,7 @@ export default function Keys() {
         </Box>
         <Box>
             <Text color="white" fontSize={{ base: "24px", md: "40px", lg: "56px" }}>
-                Jackpot: {jackpot ? parseFloat(formatEther(jackpot.toString())).toFixed(3) : 0} MATIC
+                Jackpot: {jackpot ? parseFloat(formatEther(jackpot.toString())).toFixed(3) : 0} ETH
             </Text>
         </Box>
         <Divider orientation="horizontal" />
@@ -141,7 +141,7 @@ export default function Keys() {
                         </Button> 
                         <Text color="white" fontSize="sm">
                             {/* Key Price: {keyPrice ? parseFloat(formatEther(keyPrice.toNumber())).toFixed(7) : 0} */}
-                            Cost: {keyPrice ? parseFloat(formatEther((keyPrice*Number(input)).toString())).toFixed(5) : 0} MATIC
+                            Cost: {keyPrice ? parseFloat(formatEther((keyPrice*Number(input)).toString())).toFixed(5) : 0} ETH
                         </Text>
                     </Box>
                 </Box>
@@ -161,7 +161,7 @@ export default function Keys() {
                     </Box>
                     <Box m={4}>
                         <Text color="white" fontSize="3xl">
-                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(5) : 0} MATIC
+                            Divvies: {userDivBalance ? parseFloat(formatEther(userDivBalance.toString())).toFixed(5) : 0} ETH
                         </Text>
                     </Box>
                     <Box m={4}>

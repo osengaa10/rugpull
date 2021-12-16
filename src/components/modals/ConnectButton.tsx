@@ -14,40 +14,40 @@ export default function ConnectButton({ handleOpenModal }: Props) {
 
   function handleConnectWallet() {
     activateBrowserWallet();
-    switchNetworkMumbai();
+    switchNetworkOptimism();
   }
 
-  // const switchNetworkMumbai = async () => {
-  //   try {
-  //     await window.ethereum.request({
-  //       method: "wallet_switchEthereumChain",
-  //       params: [{ chainId: "0x13881" }],
-  //     });
-  //   } catch (error) {
-  //     if (error.code === 4902) {
-  //       try {
-  //         await window.ethereum.request({
-  //           method: "wallet_addEthereumChain",
-  //           params: [
-  //             {
-  //               chainId: "0x13881",
-  //               chainName: "Mumbai",
-  //               rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-  //               nativeCurrency: {
-  //                 name: "Matic",
-  //                 symbol: "Matic",
-  //                 decimals: 18,
-  //               },
-  //               blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-  //             },
-  //           ],
-  //         });
-  //       } catch (addError) {
-  //         alert(addError);
-  //       }
-  //     }
-  //   }
-  // }
+  const switchNetworkOptimism = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0xA" }],
+      });
+    } catch (error) {
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0xA",
+                chainName: "Optimistic Ethereum",
+                rpcUrls: ["https://mainnet.optimism.io"],
+                nativeCurrency: {
+                  name: "Ethereum",
+                  symbol: "ETH",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://optimistic.etherscan.io"],
+              },
+            ],
+          });
+        } catch (addError) {
+          alert(addError);
+        }
+      }
+    }
+  }
 
   const switchNetworkMumbai = async () => {
     try {
@@ -83,7 +83,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
 
 
   
-  return account && chainId === 137 ? (
+  return account && chainId === 10 ? (
     <Box
       display="flex"
       alignItems="center"
@@ -93,7 +93,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
     >
       <Box px="3">
         <Text color="white" fontSize="md">
-          {etherBalance && parseFloat(formatEther(etherBalance)).toFixed(3)} MATIC
+          {etherBalance && parseFloat(formatEther(etherBalance)).toFixed(3)} ETH
         </Text>
       </Box>
       <Button
@@ -139,7 +139,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
         borderColor: "blue.700",
       }}
     >
-      Connect to MATIC wallet
+      Connect to OE wallet
     </Button>
   );
 }

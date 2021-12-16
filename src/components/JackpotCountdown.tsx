@@ -54,7 +54,7 @@ export default function JackpotCountdown() {
             
         <Flex direction="column" align="center" mt="4">
             <Text color="white" as="cite" fontSize={{ base: "15px", md: "32px", lg: "40px" }}>
-                Connect to wallet to Polygon network and
+                Connect to wallet to Optimism L2 and
             </Text>
             <Text color="white" as="cite" fontSize={{ base: "24px", md: "40px", lg: "40px" }}>
                 see who is pulling the rug! {winner}
