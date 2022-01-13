@@ -14,40 +14,41 @@ export default function ConnectButton({ handleOpenModal }: Props) {
 
   function handleConnectWallet() {
     activateBrowserWallet();
-    switchNetworkOptimism();
+    // switchNetworkOptimism();
+    switchNetworkMumbai();
   }
 
-  const switchNetworkOptimism = async () => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0xA" }],
-      });
-    } catch (error) {
-      if (error.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0xA",
-                chainName: "Optimistic Ethereum",
-                rpcUrls: ["https://mainnet.optimism.io"],
-                nativeCurrency: {
-                  name: "Ethereum",
-                  symbol: "ETH",
-                  decimals: 18,
-                },
-                blockExplorerUrls: ["https://optimistic.etherscan.io"],
-              },
-            ],
-          });
-        } catch (addError) {
-          alert(addError);
-        }
-      }
-    }
-  }
+  // const switchNetworkOptimism = async () => {
+  //   try {
+  //     await window.ethereum.request({
+  //       method: "wallet_switchEthereumChain",
+  //       params: [{ chainId: "0xA" }],
+  //     });
+  //   } catch (error) {
+  //     if (error.code === 4902) {
+  //       try {
+  //         await window.ethereum.request({
+  //           method: "wallet_addEthereumChain",
+  //           params: [
+  //             {
+  //               chainId: "0xA",
+  //               chainName: "Optimistic Ethereum",
+  //               rpcUrls: ["https://mainnet.optimism.io"],
+  //               nativeCurrency: {
+  //                 name: "Ethereum",
+  //                 symbol: "ETH",
+  //                 decimals: 18,
+  //               },
+  //               blockExplorerUrls: ["https://optimistic.etherscan.io"],
+  //             },
+  //           ],
+  //         });
+  //       } catch (addError) {
+  //         alert(addError);
+  //       }
+  //     }
+  //   }
+  // }
 
   const switchNetworkMumbai = async () => {
     try {
@@ -139,7 +140,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
         borderColor: "blue.700",
       }}
     >
-      Connect to OE wallet
+      Connect to Polygon
     </Button>
   );
 }
