@@ -1,15 +1,17 @@
-# Basic Sample Hardhat Project
+# A fast-paced game where anyone can pull the rug!
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+***Disclaimer: There is always a risk when interacting with any smart contract, so DO NOT use funds that you aren't willing to lose.*** 
 
-Try running some of the following tasks:
+- Objective:
+    - Win the jackpot by purchasing the last key before the timer runs out.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+- Buying Keys:
+    - Each key purchased adds 30 seconds to the timer. Timer cannot exceed 24 hours.
+    - 49.5% goes to the jackpot.
+    - 49.5% pays out as dividends proportional to amount of keys each player holds.
+    - 1% goes to the winner or the developer (me), depending on the vote outcome.
+    - Key price increases after each purchase
+
+
+
+See game at [rugpull.rip](https://rugpull.rip).
